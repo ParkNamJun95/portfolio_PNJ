@@ -608,18 +608,17 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="essay" class="slide-section">
-        <div class="max-w-4xl mx-auto w-full">
-            <h2 class="text-5xl font-extrabold mb-12 text-center md:text-left">More about <span class="gradient-text">본인 이름</span></h2>
-            
+        <!-- 자기소개서 영역 (기존 마지막 슬라이드에서 이력서 하단으로 이동) -->
+        <div class="mt-8">
+            <!-- 클릭 확장 배너 -->
             <div id="overlay-essayDetail" class="bento-card cursor-pointer relative overflow-hidden py-12 border-blue-500/30 group flex flex-col items-center justify-center bg-slate-800/50 hover:bg-slate-800 transition-all shadow-lg" onclick="toggleDetail('essayDetail', '자기소개서 펼쳐보기 ▼', '자기소개서 접기 ▲')">
                 <i class="fa-solid fa-book-open text-5xl text-blue-400 mb-4 transition-transform group-hover:scale-110"></i>
                 <p class="text-white font-bold text-2xl tracking-wide toggle-text">자기소개서 펼쳐보기 ▼</p>
                 <p class="text-slate-400 text-sm mt-3">숫자 너머에 있는 저의 마케팅 철학과 성장 이야기를 확인하세요.</p>
             </div>
 
+            <!-- 펼쳐지는 자기소개서 상세 내용 -->
             <div id="essayDetail" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out mt-4 rounded-2xl border border-white/5 bg-slate-800">
                 <div class="p-8 md:p-12 text-slate-300 space-y-10 leading-relaxed text-justify">
                     <div>
