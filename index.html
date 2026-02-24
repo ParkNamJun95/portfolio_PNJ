@@ -144,8 +144,9 @@
                 <div class="reveal">
                     <span class="px-4 py-1 rounded-full border border-emerald-500/30 text-emerald-400 text-sm font-semibold mb-6 inline-block">Portfolio</span>
                 </div>
-                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 leading-tight" id="hero-title" aria-label="Consumer Insight Engineer">
-                    Consumer Insight<br><span class="text-white">Engineer</span>
+                <!-- 글자 크기를 md:text-8xl에서 lg:text-7xl로 약간 줄이고 명시적으로 3줄로 나눔 -->
+                <h1 class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight" id="hero-title" aria-label="Consumer Insight Engineer">
+                    Consumer<br>Insight<br><span class="text-white">Engineer</span>
                 </h1>
                 <div class="reveal reveal-delay-1">
                     <p class="text-xl text-slate-400 mb-8 max-w-md">
@@ -724,16 +725,22 @@
         document.addEventListener("DOMContentLoaded", () => {
             const heroTitleContainer = document.getElementById('hero-title');
             if(heroTitleContainer) {
-                const text1 = "Consumer Insight";
-                const text2 = "Engineer";
+                const text1 = "Consumer";
+                const text2 = "Insight";
+                const text3 = "Engineer";
                 let html = '';
                 let delay = 0;
                 for(let char of text1) {
                     html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`;
                     delay += 0.05;
                 }
-                html += '<br><span class="text-white">';
+                html += '<br>';
                 for(let char of text2) {
+                    html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`;
+                    delay += 0.05;
+                }
+                html += '<br><span class="text-white">';
+                for(let char of text3) {
                     html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`;
                     delay += 0.05;
                 }
