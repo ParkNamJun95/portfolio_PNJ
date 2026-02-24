@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 네이버 블로그 이미지 외부 링크 차단 해결을 위한 메타 태그 -->
     <meta name="referrer" content="no-referrer">
-    <title>Portfolio of ParkNamJun</title>
+    <!-- ★ 브라우저 탭에 표시되는 페이지 타이틀 수정 ★ -->
+    <title>박남준 | Fail Fast Marketer Portfolio</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -143,12 +144,12 @@
                 <div class="reveal">
                     <span class="px-4 py-1 rounded-full border border-emerald-500/30 text-emerald-400 text-sm font-semibold mb-6 inline-block">Portfolio</span>
                 </div>
-                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 leading-tight" id="hero-title" aria-label="Fail Fast Marketer">
-                    Fail Fast<br><span class="text-white">Marketer</span>
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 leading-tight" id="hero-title" aria-label="Consumer Insight Engineer">
+                    Consumer Insight<br><span class="text-white">Engineer</span>
                 </h1>
                 <div class="reveal reveal-delay-1">
                     <p class="text-xl text-slate-400 mb-8 max-w-md">
-                        시행착오를 즐기는 마케터, 박남준입니다.
+                        고객의 니즈를 성과로 연결하는 마케터, 박남준입니다.
                     </p>
                     <div class="flex gap-4">
                         <div class="bento-card p-4 flex items-center gap-3">
@@ -623,7 +624,7 @@
                 </div>
             </div>
             <div class="reveal reveal-delay-2 h-full">
-                <div id="overlay-resumeDetail" class="bento-card cursor-pointer relative overflow-hidden h-full min-h-[250px] border-emerald-500/30 group flex flex-col items-center justify-center bg-slate-800/50 hover:bg-slate-800" onclick="toggleDetail('resumeDetail', '이력서 펼쳐보기 ▼', '이력서 접기 ▲')">
+                <div id="overlay-resumeDetail" class="bento-card cursor-pointer relative overflow-hidden h-full min-h-[250px] border-emerald-500/30 group flex flex-col items-center justify-center bg-slate-800/50 hover:bg-slate-800 transition-all" onclick="toggleDetail('resumeDetail', '이력서 펼쳐보기 ▼', '이력서 접기 ▲')">
                     <i class="fa-solid fa-file-contract text-5xl text-emerald-400 mb-4 transition-transform group-hover:scale-110"></i>
                     <p class="text-white font-bold text-2xl toggle-text">이력서 펼쳐보기 ▼</p>
                     <p class="text-slate-400 text-sm mt-3">상세 경력, 학력 및 자격증 정보 확인</p>
@@ -723,8 +724,8 @@
         document.addEventListener("DOMContentLoaded", () => {
             const heroTitleContainer = document.getElementById('hero-title');
             if(heroTitleContainer) {
-                const text1 = "Fail Fast";
-                const text2 = "Marketer";
+                const text1 = "Consumer Insight";
+                const text2 = "Engineer";
                 let html = '';
                 let delay = 0;
                 for(let char of text1) {
@@ -787,5 +788,3 @@
     </script>
 </body>
 </html>
-
-
