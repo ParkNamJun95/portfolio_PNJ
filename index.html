@@ -88,7 +88,6 @@
         .expandable-content {
             transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
         }
-
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -102,7 +101,6 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
-
         .char-anim {
             opacity: 0;
             transform: translateY(40px) scale(0.8);
@@ -219,7 +217,7 @@
     <section id="contents" class="slide-section">
         <h2 class="text-4xl font-bold mb-12 reveal">Index</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 h-auto lg:h-[450px]">
-            <!-- 01. 온드미디어 마케팅 (기존 2번을 1번으로 승격) -->
+            <!-- 01. 온드미디어 마케팅 -->
             <div class="reveal reveal-delay-1 h-48 lg:h-full">
                 <a href="#idx1" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10 hover:border-blue-500">
                     <img src="https://postfiles.pstatic.net/MjAyNjAzMDdfNzEg/MDAxNzcyODEwMjI0Nzc1.96z65SmvZojCMkbFpFEYxc6eZltl0-DPhY_pEhX8yEgg._j6N2-wT9QSkGifmB2as466puHi-G6gb7BO2jKl4qfkg.PNG/Group_1000003510.png?type=w966" alt="Owned Media" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
@@ -232,7 +230,7 @@
                 </a>
             </div>
 
-            <!-- 02. 리마인드 앱 기획 및 활용 (신규 추가) -->
+            <!-- 02. 리마인드 앱 기획 및 활용 -->
             <div class="reveal reveal-delay-2 h-48 lg:h-full">
                 <a href="#idx2" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10 hover:border-emerald-500">
                     <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" alt="Remind App" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
@@ -253,7 +251,6 @@
                     <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
                     <div class="relative z-10 drop-shadow-md">
                         <span class="text-yellow-400 text-3xl font-black mb-1 block drop-shadow-lg">03</span>
-                        <!-- Y축 정렬을 위해 고정 높이(h-[2.5rem]) 추가 -->
                         <h3 class="text-base font-bold text-white leading-tight tracking-tight h-[2.5rem]">상세페이지/<br>미디어 콘텐츠 제작</h3>
                     </div>
                 </a>
@@ -267,7 +264,6 @@
                     <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
                     <div class="relative z-10 drop-shadow-md">
                         <span class="text-pink-400 text-3xl font-black mb-1 block drop-shadow-lg">04</span>
-                        <!-- 한 줄로 수정 후, Y축 정렬을 위해 고정 높이(h-[2.5rem]) 추가 -->
                         <h3 class="text-base font-bold text-white leading-tight tracking-tight h-[2.5rem]">CRM 마케팅</h3>
                     </div>
                 </a>
@@ -286,7 +282,7 @@
                 </a>
             </div>
 
-            <!-- 06. 이력서 & 자기소개서 (새로 전달해주신 네이버 이미지 링크로 교체) -->
+            <!-- 06. 이력서 & 자기소개서 -->
             <div class="reveal reveal-delay-2 h-48 lg:h-full">
                 <a href="#resume" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10 hover:border-cyan-500">
                     <img src="https://postfiles.pstatic.net/MjAyNjAzMDhfMjI4/MDAxNzcyOTA3MDc4Mzc1.jz56QvpzggaQvuT5-tDrd-5JDFaav2aA-H21DcnwSyAg.1uJRENvXYaFSw4Ka0vX0mt4yVlsA1DRtVyKJpkQja1wg.JPEG/resume.jpg?type=w966" alt="Resume Background" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100" onerror="this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop';">
@@ -301,7 +297,7 @@
         </div>
     </section>
 
-    <!-- 01. 온드 미디어 마케팅 (기존 2번을 1번으로 변경 및 통합) -->
+    <!-- 01. 온드 미디어 마케팅 -->
     <section id="idx1" class="slide-section">
         <div class="mb-12 reveal">
             <span class="text-blue-400 font-bold mb-2 block tracking-widest">PROJECT 01</span>
@@ -389,7 +385,7 @@
         </div>
     </section>
 
-    <!-- 02. 리마인드 앱 기획 및 활용 (새로 추가) -->
+    <!-- 02. 리마인드 앱 기획 및 활용 -->
     <section id="idx2" class="slide-section">
         <div class="mb-12 reveal">
             <span class="text-emerald-400 font-bold mb-2 block tracking-widest">PROJECT 02</span>
@@ -436,35 +432,7 @@
         </div>
     </section>
 
-    <!-- 03. 상세페이지 및 미디어 콘텐츠 제작 (기존 3번 유지) -->
-                    <div class="p-6">
-                        <p class="font-bold text-lg text-white mb-2">인스타그램 릴스 챌린지</p>
-                        <p class="text-sm text-slate-400 leading-relaxed">조회수 10만 회를 기록한 바이럴 영상 기획 및 촬영본</p>
-                    </div>
-                </div>
-                <div class="flex flex-col bg-slate-900/50 rounded-2xl overflow-hidden border border-white/5 group">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="SNS 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-6">
-                        <p class="font-bold text-lg text-white mb-2">유튜브 브랜드 채널 관리</p>
-                        <p class="text-sm text-slate-400 leading-relaxed">정보성 롱폼 영상 기획을 통한 구독자 체류시간 증가</p>
-                    </div>
-                </div>
-                <div class="flex flex-col bg-slate-900/50 rounded-2xl overflow-hidden border border-white/5 group">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop" alt="SNS 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-6">
-                        <p class="font-bold text-lg text-white mb-2">정보성 카드뉴스 배포</p>
-                        <p class="text-sm text-slate-400 leading-relaxed">타겟층이 공유하기 쉬운 포맷으로 제작된 인포그래픽</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 03. 상세페이지 및 미디어 콘텐츠 제작 (기존 5번을 3번 위치로 이동) -->
+    <!-- 03. 상세페이지 및 미디어 콘텐츠 제작 -->
     <section id="idx3" class="slide-section">
         <div class="mb-12 reveal">
             <span class="text-yellow-400 font-bold mb-2 block tracking-widest">PROJECT 03</span>
@@ -503,7 +471,7 @@
         </div>
     </section>
 
-    <!-- 04. CRM 마케팅 (기존 위치 유지) -->
+    <!-- 04. CRM 마케팅 -->
     <section id="idx4" class="slide-section">
         <div class="mb-12 reveal">
             <span class="text-pink-400 font-bold mb-2 block tracking-widest">PROJECT 04</span>
@@ -547,7 +515,7 @@
         </div>
     </section>
 
-    <!-- 05. 홈페이지 기획 및 관리 (기존 3번을 5번 위치로 이동) -->
+    <!-- 05. 홈페이지 기획 및 관리 -->
     <section id="idx5" class="slide-section">
         <div class="mb-12 reveal">
             <span class="text-purple-400 font-bold mb-2 block tracking-widest">PROJECT 05</span>
