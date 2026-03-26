@@ -88,6 +88,23 @@
         .expandable-content {
             transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
         }
+        
+        /* 가로 스크롤바 커스텀 디자인 */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.4);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(16, 185, 129, 0.7);
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -393,24 +410,25 @@
             <p class="text-slate-400 mt-4 text-lg">유저의 일상에 자연스럽게 스며드는 스마트 알림 서비스를 통해 고객 잔존율(Retention)을 강화했습니다.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <!-- Left: App Mockup/Image -->
-            <div class="reveal reveal-delay-1 h-full">
-                <div class="bento-card overflow-hidden h-full min-h-[300px] border-emerald-500/30 flex items-center justify-center p-6 bg-gradient-to-tr from-emerald-900/20 to-transparent">
-                    <div class="relative w-full max-w-sm aspect-[9/16] bg-slate-800 rounded-3xl border-4 border-slate-700 overflow-hidden shadow-2xl">
-                        <!-- App UI Placeholder Image -->
-                        <img src="https://images.unsplash.com/photo-1607252656733-fd7428f0d8b5?q=80&w=600&auto=format&fit=crop" alt="App Interface Mockup" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
-                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-900 to-transparent">
-                            <h4 class="text-white font-bold text-xl mb-1">스마트 리마인더</h4>
-                            <p class="text-emerald-400 text-sm">개인화 푸시 알림 설계</p>
+        <!-- items-center를 items-stretch로 변경하여 좌우 높이 동기화 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
+            <!-- Left: App Mockup/Image (클릭형 썸네일) -->
+            <div class="reveal reveal-delay-1 flex justify-center h-full">
+                <!-- h-full과 flex items-center를 추가하여 카드가 늘어나도 이미지는 중앙에 위치 -->
+                <div class="bento-card cursor-pointer relative overflow-hidden border-emerald-500/30 flex items-center justify-center p-6 bg-gradient-to-tr from-emerald-900/20 to-transparent group w-full h-full" onclick="openSlideModal()">
+                    <div class="relative w-full max-w-[240px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-95 bg-slate-800">
+                        <img src="https://i.imgur.com/0e4l4TL.png" alt="App Interface Mockup" class="w-full h-full object-cover opacity-90 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300 z-20">
+                            <i class="fa-solid fa-images text-4xl text-emerald-400 mb-3"></i>
+                            <p class="text-white font-bold text-lg tracking-wide text-center px-4">기획안 슬라이드<br>중앙에서 펼쳐보기</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Right: Content/Stats -->
-            <div class="reveal reveal-delay-2 flex flex-col justify-center gap-6">
-                <div class="bento-card p-8 border-white/5">
+            <div class="reveal reveal-delay-2 flex flex-col justify-center gap-6 h-full">
+                <div class="bento-card p-8 border-white/5 h-full flex flex-col justify-center">
                     <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-bell text-emerald-400"></i> 주요 기획 포인트</h3>
                     <ul class="space-y-4 text-slate-300">
                         <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">행동 기반 트리거 알림:</strong> 유저 행동(장바구니 이탈, 특정 페이지 체류) 데이터를 기반으로 최적의 타이밍에 알림 발송</div></li>
@@ -652,7 +670,35 @@
         </div>
     </section>
 
-    <!-- Modals & Footer -->
+    <!-- Modals -->
+    <!-- 중앙 가로 스크롤 슬라이드 모달 (Project 02 전용) -->
+    <div id="slideModal" class="fixed inset-0 z-[3000] hidden bg-black/90 flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-white text-4xl z-50 hover:text-emerald-400" onclick="closeSlideModal()">&times;</button>
+        <div class="w-full max-w-6xl relative mt-10 px-4 sm:px-16">
+            <!-- 왼쪽 화살표 -->
+            <button onclick="scrollSlider(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 transition-colors p-2">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- 이미지 슬라이더 -->
+            <div id="appSliderContainer" class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory custom-scrollbar items-center px-4 scroll-smooth">
+                <img src="https://i.imgur.com/0e4l4TL.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/0e4l4TL.jpeg';">
+                <img src="https://i.imgur.com/L0nViCY.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/L0nViCY.jpeg';">
+                <img src="https://i.imgur.com/TZiP4zB.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/TZiP4zB.jpeg';">
+                <img src="https://i.imgur.com/CwQpjFI.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/CwQpjFI.jpeg';">
+                <img src="https://i.imgur.com/e57ZdvY.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/e57ZdvY.jpeg';">
+                <img src="https://i.imgur.com/D6PIyZ8.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/D6PIyZ8.jpeg';">
+                <img src="https://i.imgur.com/4elNnAL.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/4elNnAL.jpeg';">
+                <img src="https://i.imgur.com/WjRpzT1.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/WjRpzT1.jpeg';">
+            </div>
+
+            <!-- 오른쪽 화살표 -->
+            <button onclick="scrollSlider(1)" class="absolute right-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 transition-colors p-2">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
     <div id="imageModal" class="fixed inset-0 z-[2000] hidden bg-black/90 flex items-center justify-center p-4 sm:p-8 cursor-pointer opacity-0 transition-opacity duration-300" onclick="closeModal()">
         <img id="modalImage" src="" class="max-w-[90vw] max-h-[90vh] object-contain rounded-xl shadow-2xl transform scale-95 transition-transform duration-300">
         <button class="absolute top-6 right-6 text-white text-4xl">&times;</button>
@@ -735,6 +781,41 @@
             modal.classList.remove('opacity-100');
             modalImg.classList.remove('scale-100');
             setTimeout(() => { modal.classList.add('hidden'); modalImg.src = ""; }, 300);
+        }
+
+        function openSlideModal() {
+            const modal = document.getElementById('slideModal');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex'; 
+            
+            const slider = document.getElementById('appSliderContainer');
+            setTimeout(() => { 
+                modal.classList.add('opacity-100'); 
+                if (slider) slider.scrollLeft = 0;
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeSlideModal() {
+            const modal = document.getElementById('slideModal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => { 
+                modal.classList.add('hidden'); 
+                modal.style.display = '';
+            }, 300);
+            document.body.style.overflow = ''; 
+        }
+
+        function scrollSlider(direction) {
+            const slider = document.getElementById('appSliderContainer');
+            if (slider) {
+                const img = slider.querySelector('img');
+                if (img) {
+                    const scrollAmount = img.clientWidth + 24; 
+                    slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+                }
+            }
         }
     </script>
 </body>
