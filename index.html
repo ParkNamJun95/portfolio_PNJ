@@ -105,6 +105,15 @@
             background: rgba(16, 185, 129, 0.7);
         }
 
+        /* 모달창 슬라이더 스크롤바 숨김 처리용 클래스 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -407,20 +416,18 @@
         <div class="mb-12 reveal">
             <span class="text-emerald-400 font-bold mb-2 block tracking-widest">PROJECT 02</span>
             <h2 class="text-5xl font-extrabold">리마인드 앱 기획 및 활용</h2>
-            <p class="text-slate-400 mt-4 text-lg">유저의 일상에 자연스럽게 스며드는 스마트 알림 서비스를 통해 고객 잔존율(Retention)을 강화했습니다.</p>
+            <p class="text-slate-400 mt-4 text-lg">상담 시트를 기반으로 한 리타겟팅 강화를 위해 &lt;리마인드 문자 발송 앱&gt; 기획 및 활용</p>
         </div>
 
-        <!-- items-center를 items-stretch로 변경하여 좌우 높이 동기화 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
             <!-- Left: App Mockup/Image (클릭형 썸네일) -->
             <div class="reveal reveal-delay-1 flex justify-center h-full">
-                <!-- h-full과 flex items-center를 추가하여 카드가 늘어나도 이미지는 중앙에 위치 -->
                 <div class="bento-card cursor-pointer relative overflow-hidden border-emerald-500/30 flex items-center justify-center p-6 bg-gradient-to-tr from-emerald-900/20 to-transparent group w-full h-full" onclick="openSlideModal()">
-                    <div class="relative w-full max-w-[240px] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-95 bg-slate-800">
-                        <img src="https://i.imgur.com/0e4l4TL.png" alt="App Interface Mockup" class="w-full h-full object-cover opacity-90 transition-transform duration-700">
+                    <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 group-hover:scale-95 bg-slate-800">
+                        <img src="https://i.imgur.com/0e4l4TL.png" alt="App Interface Mockup" class="w-full h-full object-contain opacity-90 transition-transform duration-700" onerror="this.onerror=null; this.src='https://i.imgur.com/0e4l4TL.jpeg';">
                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300 z-20">
-                            <i class="fa-solid fa-images text-4xl text-emerald-400 mb-3"></i>
-                            <p class="text-white font-bold text-lg tracking-wide text-center px-4">기획안 슬라이드<br>중앙에서 펼쳐보기</p>
+                            <i class="fa-solid fa-expand text-4xl text-emerald-400 mb-3"></i>
+                            <p class="text-white font-bold text-lg tracking-wide text-center px-4">기획안 슬라이드 펼쳐보기</p>
                         </div>
                     </div>
                 </div>
@@ -429,21 +436,21 @@
             <!-- Right: Content/Stats -->
             <div class="reveal reveal-delay-2 flex flex-col justify-center gap-6 h-full">
                 <div class="bento-card p-8 border-white/5 h-full flex flex-col justify-center">
-                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-bell text-emerald-400"></i> 주요 기획 포인트</h3>
+                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-chart-line text-emerald-400"></i> 앱 도입 후 성과</h3>
                     <ul class="space-y-4 text-slate-300">
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">행동 기반 트리거 알림:</strong> 유저 행동(장바구니 이탈, 특정 페이지 체류) 데이터를 기반으로 최적의 타이밍에 알림 발송</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">A/B 테스트를 통한 카피라이팅:</strong> 클릭률(CTR)을 높이기 위한 직관적인 워딩과 이모지 조합 발굴</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">리워드 시스템 연동:</strong> 알림 확인 및 앱 접속 시 게이미피케이션(Gamification) 요소 적용으로 자발적 참여 유도</div></li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">작업 자동화로 업무 효율 향상 :</strong> 평균값 0.3일 감소</div></li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">실시간 응대로 잠재 고객 이탈 방지 :</strong> 중간값 3일 감소</div></li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <div><strong class="text-white">전송 로그 자동 기록으로</strong> 관리편의성 증대</div></li>
                     </ul>
                 </div>
 
                 <div class="bento-card p-8 border-emerald-500/20 bg-emerald-900/10 flex items-center justify-between">
                     <div>
-                        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">앱 재방문율(Retention) 개선</p>
-                        <p class="text-slate-300 text-sm">푸시 알림 수신 동의 유저 기준</p>
+                        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">도입 후 수임율(KPI)</p>
+                        <p class="text-slate-300 text-sm">(KPI 성장률 88.5%)</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-5xl font-black text-emerald-400">+68%</span>
+                        <span class="text-5xl font-black text-emerald-400">+11.6%</span>
                     </div>
                 </div>
             </div>
@@ -671,28 +678,26 @@
     </section>
 
     <!-- Modals -->
-    <!-- 중앙 가로 스크롤 슬라이드 모달 (Project 02 전용) -->
-    <div id="slideModal" class="fixed inset-0 z-[3000] hidden bg-black/90 flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+    <div id="slideModal" class="fixed inset-0 z-[3000] hidden bg-black/95 flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
         <button class="absolute top-6 right-6 text-white text-4xl z-50 hover:text-emerald-400" onclick="closeSlideModal()">&times;</button>
-        <div class="w-full max-w-6xl relative mt-10 px-4 sm:px-16">
-            <!-- 왼쪽 화살표 -->
+        <div class="w-full max-w-5xl relative mt-4 px-10 sm:px-16 h-[75vh] flex items-center">
+            
             <button onclick="scrollSlider(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 transition-colors p-2">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <!-- 이미지 슬라이더 -->
-            <div id="appSliderContainer" class="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory custom-scrollbar items-center px-4 scroll-smooth">
-                <img src="https://i.imgur.com/0e4l4TL.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/0e4l4TL.jpeg';">
-                <img src="https://i.imgur.com/L0nViCY.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/L0nViCY.jpeg';">
-                <img src="https://i.imgur.com/TZiP4zB.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/TZiP4zB.jpeg';">
-                <img src="https://i.imgur.com/CwQpjFI.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/CwQpjFI.jpeg';">
-                <img src="https://i.imgur.com/e57ZdvY.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/e57ZdvY.jpeg';">
-                <img src="https://i.imgur.com/D6PIyZ8.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/D6PIyZ8.jpeg';">
-                <img src="https://i.imgur.com/4elNnAL.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/4elNnAL.jpeg';">
-                <img src="https://i.imgur.com/WjRpzT1.png" class="h-[240px] md:h-[360px] w-auto object-contain rounded-xl snap-center shrink-0 shadow-lg bg-slate-800" onerror="this.onerror=null; this.src='https://i.imgur.com/WjRpzT1.jpeg';">
+            <div id="appSliderContainer" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar items-center scroll-smooth w-full h-full bg-slate-900/50 rounded-2xl shadow-2xl">
+                <img src="https://i.imgur.com/0e4l4TL.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/0e4l4TL.jpeg';">
+                <img src="https://i.imgur.com/L0nViCY.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/L0nViCY.jpeg';">
+                <img src="https://i.imgur.com/TZiP4zB.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/TZiP4zB.jpeg';">
+                <img src="https://i.imgur.com/CwQpjFI.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/CwQpjFI.jpeg';">
+                <img src="https://i.imgur.com/e57ZdvY.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/e57ZdvY.jpeg';">
+                <img src="https://i.imgur.com/D6PIyZ8.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/D6PIyZ8.jpeg';">
+                <img src="https://i.imgur.com/4elNnAL.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/4elNnAL.jpeg';">
+                <!-- 마지막 이미지 직접 링크 변환 후 교체 완료 -->
+                <img src="https://i.imgur.com/FFU8gF2.png" class="w-full h-full object-contain snap-center shrink-0" onerror="this.onerror=null; this.src='https://i.imgur.com/FFU8gF2.png';">
             </div>
 
-            <!-- 오른쪽 화살표 -->
             <button onclick="scrollSlider(1)" class="absolute right-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 transition-colors p-2">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
@@ -810,11 +815,8 @@
         function scrollSlider(direction) {
             const slider = document.getElementById('appSliderContainer');
             if (slider) {
-                const img = slider.querySelector('img');
-                if (img) {
-                    const scrollAmount = img.clientWidth + 24; 
-                    slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-                }
+                const scrollAmount = slider.clientWidth; 
+                slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
             }
         }
     </script>
