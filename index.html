@@ -8,381 +8,331 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand-color: #ea580c; /* 주홍/오렌지 포인트 컬러 */
+        }
         body {
             font-family: 'Pretendard', sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(16,185,129,0.08), transparent 30%),
-                radial-gradient(circle at top right, rgba(59,130,246,0.08), transparent 35%),
-                radial-gradient(circle at bottom left, rgba(168,85,247,0.06), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(236,72,153,0.05), transparent 35%),
-                linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
-            color: #f8fafc;
+            background-color: #fdfdfd; /* 차분한 오프화이트 배경 */
+            color: #111827; /* 딥 차콜 텍스트 */
             scroll-behavior: smooth;
-            overflow-x: hidden;
-            position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 120px 120px;
-            opacity: 0.15;
-            z-index: 1;
-            pointer-events: none;
-        }
+        /* Typography Hierarchy */
+        .h-hero { font-size: clamp(3.5rem, 8vw, 8rem); font-weight: 900; line-height: 0.95; letter-spacing: -0.03em; }
+        .h-section { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -0.02em; }
+        .h-number { font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+        .label-sm { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; }
 
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(2,6,23,0.10),
-                    rgba(2,6,23,0.28),
-                    rgba(2,6,23,0.45)
-                );
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* 콘텐츠 레이어 분리 */
-        .slide-section, .glass-nav, .progress-bar-container, footer {
-            position: relative;
-            z-index: 10;
-        }
-
-        .bento-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            transition: all 0.3s ease;
-        }
-        /* 박스 호버 시 화려한 색상 제거 및 무채색(반투명 화이트) 적용 */
-        .bento-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #10b981, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .slide-section {
-            min-height: 100vh;
-            padding: 80px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .progress-bar-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            z-index: 1000;
-        }
-        #progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #10b981, #3b82f6);
-            transition: width 0.1s;
-        }
-        .glass-nav {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            padding: 10px 20px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
-        }
-        .skill-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s;
-        }
-        /* 스킬 아이템 호버 시 무채색 적용 */
-        .skill-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .expandable-content {
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
-        }
+        /* Editorial Layout Utils */
+        .section-padding { padding: 120px 24px; }
+        @media (max-width: 768px) { .section-padding { padding: 80px 20px; } }
         
-        .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
-        
+        .border-t-main { border-top: 1px solid #e5e7eb; }
+        .border-b-main { border-bottom: 1px solid #e5e7eb; }
+
+        /* Progress Bar */
+        #progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: transparent; z-index: 1000; }
+        #progress-bar { height: 100%; width: 0%; background: var(--brand-color); transition: width 0.1s; }
+
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+        .reveal-delay-4 { transition-delay: 0.6s; }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f3f4f6; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* Interactive Elements */
+        .hover-trigger { position: relative; display: inline-block; }
+        .hover-trigger::after {
+            content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 1px;
+            bottom: 0; left: 0; background-color: var(--brand-color);
+            transform-origin: bottom right; transition: transform 0.3s ease-out;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
+        .hover-trigger:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
-        .char-anim {
+        .btn-editorial {
+            display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 700;
+            padding: 12px 24px; border: 1px solid #111827; color: #111827; background: transparent;
+            transition: all 0.3s ease; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .btn-editorial:hover { background: #111827; color: #ffffff; border-color: #111827; }
+
+        .ios-link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 18px;
+            border: 1px solid rgba(17, 24, 39, 0.1);
+            border-radius: 999px;
+            background: rgba(17, 24, 39, 0.08);
+            color: #111827;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 24px rgba(17, 24, 39, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .ios-link-button:hover {
+            transform: translateY(-1px);
+            background: rgba(17, 24, 39, 0.13);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 14px 30px rgba(17, 24, 39, 0.12);
+        }
+        
+        .expandable-content { transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out; }
+
+        .tool-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            opacity: 0.86;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+        .tool-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .tool-icon:hover { transform: translateY(-2px) scale(1.08); opacity: 1; }
+        .tool-icon img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); border-radius: 8px; }
+        .tool-icon.codex-icon img { transform: scale(1.22); }
+        .tool-tip {
+            pointer-events: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background: rgba(17, 24, 39, 0.9);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 5px 7px;
             opacity: 0;
-            transform: translateY(40px) scale(0.8);
-            animation: charBounce 0.7s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
+            transition: opacity 0.2s ease;
+            z-index: 20;
         }
-        @keyframes charBounce {
-            0% { opacity: 0; transform: translateY(40px) scale(0.8); }
-            50% { opacity: 1; transform: translateY(-15px) scale(1.1); }
-            75% { transform: translateY(5px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        .tool-icon:hover .tool-tip { opacity: 1; }
+
+        [id^="copy-ai-"] { scroll-margin-top: 110px; }
     </style>
 </head>
 <body>
 
-    <div class="progress-bar-container"><div id="progress-bar"></div></div>
+    <div id="progress-container"><div id="progress-bar"></div></div>
 
-    <nav class="glass-nav">
-        <a href="#intro" class="hover:text-emerald-400" title="Home"><i class="fa-solid fa-house"></i></a>
-        <a href="#profile" class="hover:text-emerald-400" title="Profile"><i class="fa-solid fa-id-card"></i></a>
-        <a href="#contents" class="hover:text-emerald-400" title="Index"><i class="fa-solid fa-list"></i></a>
-        <a href="#idx1" class="hover:text-blue-400" title="Owned Media">1</a>
-        <a href="#idx2" class="hover:text-yellow-400" title="Design">2</a>
-        <a href="#idx3" class="hover:text-orange-400" title="CRM & App">3</a>
-        <a href="#idx4" class="hover:text-purple-400" title="Website">4</a>
-        <a href="#resume" class="hover:text-cyan-400" title="Resume"><i class="fa-solid fa-file-lines"></i></a>
-    </nav>
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full bg-[#fdfdfd]/90 backdrop-blur-sm border-b border-gray-200 z-[100] transition-transform duration-300" id="header">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <!-- 띄어쓰기 두 칸 여백으로 수정 (ml-3) -->
+            <div class="flex items-center gap-3 ml-3">
+                <a href="#hero" class="text-sm font-black tracking-widest uppercase hover:text-orange-600 transition-colors">NamJun.P</a>
+                <span class="hidden sm:inline-block h-3 w-px bg-gray-300"></span>
+                <span class="hidden sm:inline-block label-sm text-orange-600">Marketing Portfolio</span>
+            </div>
+            <nav class="hidden md:flex gap-8 label-sm">
+                <a href="#profile" class="hover:text-orange-600 transition-colors">Profile</a>
+                <a href="#projects" class="hover:text-orange-600 transition-colors">Case Studies</a>
+                <a href="#resume" class="hover:text-orange-600 transition-colors">Resume</a>
+            </nav>
+            <!-- Mobile Menu Icon (Visual Only) -->
+            <div class="md:hidden text-lg"><i class="fa-solid fa-bars"></i></div>
+        </div>
+    </header>
 
-    <!-- 1. Intro Section -->
-    <section id="intro" class="slide-section">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div class="md:pl-12 lg:pl-20">
-                <div class="reveal">
-                    <span class="px-4 py-1 rounded-full border border-white/20 text-emerald-400 text-sm font-semibold mb-6 inline-block">Portfolio</span>
+    <!-- 1. Hero Section -->
+    <!-- 상단 여백 대폭 축소 (pt-40 -> pt-28, md:pt-48 -> md:pt-32) 요소 위로 올림 -->
+    <section id="hero" class="pt-28 pb-20 md:pt-32 md:pb-32 px-6 max-w-7xl mx-auto border-b-main min-h-[90vh] flex items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+            <div class="lg:col-span-8">
+                <!-- 띄어쓰기 두 칸 여백으로 수정 (ml-3) -->
+                <div class="mb-6 ml-3 reveal flex items-start gap-3">
+                    <p class="label-sm text-gray-900 leading-none pt-1">제작 도구</p>
+                    <div class="flex flex-wrap items-center gap-0.5 text-gray-800">
+                        <span class="tool-icon" aria-label="Illustrator">
+                            <img src="https://i.imgur.com/jqO8N6R.png" alt="Illustrator">
+                            <span class="tool-tip">Illustrator</span>
+                        </span>
+                        <span class="tool-icon" aria-label="Figma">
+                            <img src="https://i.imgur.com/HnVcgOV.png" alt="Figma">
+                            <span class="tool-tip">Figma</span>
+                        </span>
+                        <span class="tool-icon" aria-label="Gemini">
+                            <img src="https://i.imgur.com/nV88NPt.png" alt="Gemini">
+                            <span class="tool-tip">Gemini</span>
+                        </span>
+                        <span class="tool-icon" aria-label="ChatGPT">
+                            <img src="https://i.imgur.com/lCVWfiZ.png" alt="ChatGPT">
+                            <span class="tool-tip">ChatGPT</span>
+                        </span>
+                        <span class="tool-icon codex-icon" aria-label="Codex">
+                            <img src="https://i.imgur.com/hFn64oC.png" alt="Codex">
+                            <span class="tool-tip">Codex</span>
+                        </span>
+                        <span class="tool-icon" aria-label="GitHub">
+                            <img src="https://i.imgur.com/QoGVdbw.png" alt="GitHub">
+                            <span class="tool-tip">GitHub</span>
+                        </span>
+                    </div>
                 </div>
-                <h1 class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight" id="hero-title" aria-label="Consumer Insight Engineer">
-                    Consumer<br>Insight<br><span class="text-white">Engineer</span>
+                
+                <!-- 한 줄씩 나타나는 애니메이션 추가 & 온점 삭제 -->
+                <h1 class="h-hero text-gray-900 mb-8 uppercase flex flex-col">
+                    <span class="block reveal">Consumer</span>
+                    <span class="block reveal reveal-delay-1">Insight</span>
+                    <span class="block reveal reveal-delay-2">Engineer</span>
                 </h1>
-                <div class="reveal reveal-delay-1">
-                    <p class="text-xl text-slate-400 mb-8 max-w-md">
-                        고객의 니즈를 성과로 연결하는 마케터, 박남준입니다.
+                
+                <div class="reveal reveal-delay-3">
+                    <p class="text-xl md:text-2xl text-gray-600 font-light leading-relaxed max-w-2xl mb-10">
+                        고객의 니즈를 성과로 연결하는 마케터,<br>
+                        <strong class="font-bold text-gray-900">박남준</strong>입니다.
                     </p>
-                    <div class="flex gap-4">
-                        <div class="bento-card p-4 flex items-center gap-3">
-                            <i class="fa-solid fa-envelope text-emerald-400"></i>
-                            <span class="text-sm">pnj8653@naver.com</span>
-                        </div>
+                    <div class="flex items-center gap-6 text-sm font-medium ml-1">
+                        <a href="mailto:pnj8653@naver.com" class="hover-trigger border-b border-gray-300 pb-1">pnj8653@naver.com</a>
                     </div>
                 </div>
             </div>
-            <div class="reveal reveal-delay-2 h-full flex justify-center items-center">
-                <div class="relative group aspect-square w-[70%]">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    <div class="relative h-full rounded-3xl overflow-hidden border border-white/10 bg-slate-800">
-                        <img src="https://postfiles.pstatic.net/MjAyNjAyMjBfMTQz/MDAxNzcxNTMyMTA0MzA0.Un_wsEVJ9wyjzTcoIhp-YIwtvlt8AxWE6ViVFCJgfnUg.WSuy_Qn6hoyRNyLJkUVuAW897PG0-VNos-dSWAevwHYg.JPEG/SE-6993d524-2791-447f-92ee-daf68c77f6d8.jpg?type=w966" 
-                             alt="Profile image" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500"
-                             onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';">
-                    </div>
+            <div class="lg:col-span-4 reveal reveal-delay-4 flex justify-center lg:justify-end">
+                <div class="w-full max-w-[400px] aspect-[3/4] overflow-hidden bg-gray-100">
+                    <!-- 요청하신 Imgur 이미지 링크로 교체 완료 -->
+                    <img src="https://i.imgur.com/laYDHIu.png" 
+                         alt="박남준 프로필" 
+                         class="w-full h-full object-cover"
+                         onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop';">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. Profile Section -->
-    <section id="profile" class="slide-section">
-        <h2 class="text-4xl font-bold mb-12 reveal">Professional <span class="gradient-text">Profile</span></h2>
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-            <div class="md:col-span-4 reveal">
-                <div class="bento-card p-8 flex flex-col items-center text-center h-full">
-                    <div class="w-40 h-40 rounded-full overflow-hidden border-4 border-slate-700 mb-8 bg-slate-800 shadow-xl">
-                        <img src="https://postfiles.pstatic.net/MjAyNjAyMjBfMTQz/MDAxNzcxNTMyMTA0MzA0.Un_wsEVJ9wyjzTcoIhp-YIwtvlt8AxWE6ViVFCJgfnUg.WSuy_Qn6hoyRNyLJkUVuAW897PG0-VNos-dSWAevwHYg.JPEG/SE-6993d524-2791-447f-92ee-daf68c77f6d8.jpg?type=w966" alt="Profile" class="w-full h-full object-cover">
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">박 남 준</h3>
-                    <p class="text-emerald-400 text-sm font-semibold mb-8 uppercase tracking-widest">MARKETER</p>
-                    <div class="w-full space-y-6 text-left pl-4">
-                        <div><p class="text-slate-500 text-xs font-bold mb-1 uppercase">AGE</p><p class="text-lg font-bold">1995. 09. 19</p></div>
-                        <div><p class="text-slate-500 text-xs font-bold mb-1 uppercase">CAREER</p><p class="text-lg font-bold">마케팅&CRM 파트장</p><p class="text-sm text-slate-400">팀테헤란 / 팀히든 (2023~2025)</p></div>
-                        <div><p class="text-slate-500 text-xs font-bold mb-1 uppercase">Military</p><p class="text-lg font-bold">육군 만기 전역</p></div>
-                    </div>
-                </div>
-            </div>
-            <div class="md:col-span-8 reveal">
-                <div class="bento-card p-10 h-full">
-                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-3"><i class="fa-solid fa-layer-group text-blue-400"></i>Competencies & Skills</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="flex flex-col gap-4">
-                            <div class="skill-item"><i class="fa-solid fa-share-nodes text-blue-400 text-xl w-8"></i><div><p class="font-bold">온드미디어 마케팅</p><p class="text-xs text-slate-400">네이버 블로그, 인스타그램, 유튜브 등 운영</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-pen-nib text-emerald-400 text-xl w-8"></i><div><p class="font-bold">컨텐츠 마케팅</p><p class="text-xs text-slate-400">브랜딩, 광고에 필요한 컨텐츠 기획 및 제작</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-magnifying-glass-chart text-green-400 text-xl w-8"></i><div><p class="font-bold">SEO 최적화</p><p class="text-xs text-slate-400">검색 노출을 위한 키워드 및 SEO 최적화</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-chart-pie text-yellow-400 text-xl w-8"></i><div><p class="font-bold">데이터 분석</p><p class="text-xs text-slate-400">GA4, 서치어드바이저, 블랙키위 등 데이터 분석</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-users-viewfinder text-orange-400 text-xl w-8"></i><div><p class="font-bold">CRM 마케팅</p><p class="text-xs text-slate-400">고객 생애 관리 컨텐츠 발행 및 고객 관리</p></div></div>
-                        </div>
-                        <div class="flex flex-col gap-4">
-                            <div class="skill-item"><i class="fa-brands fa-figma text-purple-400 text-xl w-8"></i><div><p class="font-bold">Figma</p><p class="text-xs text-slate-400">컨텐츠, 이미지 제작에 활용</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-palette text-cyan-400 text-xl w-8"></i><div><p class="font-bold">Photoshop, Illustrator</p><p class="text-xs text-slate-400">어도비 툴 활용 가능</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-file-excel text-green-500 text-xl w-8"></i><div><p class="font-bold">Excel, PPT</p><p class="text-xs text-slate-400">기획안, 보고서 제작 능숙</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-robot text-teal-400 text-xl w-8"></i><div><p class="font-bold">AI Tools</p><p class="text-xs text-slate-400">AI 활용이 필요한 업무에 능숙</p></div></div>
-                            <div class="skill-item"><i class="fa-solid fa-film text-pink-400 text-xl w-8"></i><div><p class="font-bold">Video Editing</p><p class="text-xs text-slate-400">제품 소개 영상, 숏폼 제작 가능</p></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- 2. Profile & Competencies Section -->
+    <section id="profile" class="section-padding max-w-7xl mx-auto border-b-main">
+        <div class="mb-14 reveal">
+            <h2 class="label-sm">Profile & Skills</h2>
         </div>
-    </section>
 
-    <!-- 3. Contents Index -->
-    <section id="contents" class="slide-section">
-        <h2 class="text-4xl font-bold mb-12 reveal">Index</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 h-auto lg:h-[450px]">
-            <div class="reveal reveal-delay-1 h-48 lg:h-full">
-                <!-- 개별 테두리 호버 색상 제거 -->
-                <a href="#idx1" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10">
-                    <img src="https://postfiles.pstatic.net/MjAyNjAzMDdfNzEg/MDAxNzcyODEwMjI0Nzc1.96z65SmvZojCMkbFpFEYxc6eZltl0-DPhY_pEhX8yEgg._j6N2-wT9QSkGifmB2as466puHi-G6gb7BO2jKl4qfkg.PNG/Group_1000003510.png?type=w966" alt="Owned Media" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
-                    <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
-                    <div class="relative z-10 drop-shadow-md">
-                        <span class="text-blue-400 text-3xl font-black mb-1 block drop-shadow-lg">01</span>
-                        <h3 class="text-base font-bold text-white leading-tight tracking-tight h-[2.5rem]">온드미디어 마케팅</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="reveal reveal-delay-2 h-48 lg:h-full">
-                <a href="#idx2" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" alt="Content Creation" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
-                    <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
-                    <div class="relative z-10 drop-shadow-md">
-                        <span class="text-yellow-400 text-3xl font-black mb-1 block drop-shadow-lg">02</span>
-                        <h3 class="text-base font-bold text-white leading-tight tracking-tight h-[2.5rem]">카드뉴스 & 디자인 컨텐츠<br>기획 및 제작</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="reveal reveal-delay-3 h-48 lg:h-full">
-                <a href="#idx3" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10">
-                    <img src="https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=800&auto=format&fit=crop" alt="CRM & App" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
-                    <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
-                    <div class="relative z-10 drop-shadow-md">
-                        <span class="text-orange-400 text-3xl font-black mb-1 block drop-shadow-lg">03</span>
-                        <h3 class="text-base font-bold text-white leading-tight tracking-tight h-[2.5rem]">CRM 마케팅 &<br>앱 기획</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="reveal reveal-delay-4 h-48 lg:h-full">
-                <a href="#idx4" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="Website Planning" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100">
-                    <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
-                    <div class="relative z-10 drop-shadow-md">
-                        <span class="text-purple-400 text-3xl font-black mb-1 block drop-shadow-lg">04</span>
-                        <h3 class="text-lg font-bold text-white leading-tight">홈페이지 기획<br>및 관리</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="reveal reveal-delay-1 h-48 lg:h-full">
-                <a href="#resume" class="bento-card overflow-hidden relative group h-full flex flex-col justify-end p-5 border-white/10">
-                    <img src="https://postfiles.pstatic.net/MjAyNjAzMDhfMjI4/MDAxNzcyOTA3MDc4Mzc1.jz56QvpzggaQvuT5-tDrd-5JDFaav2aA-H21DcnwSyAg.1uJRENvXYaFSw4Ka0vX0mt4yVlsA1DRtVyKJpkQja1wg.JPEG/resume.jpg?type=w966" alt="Resume Background" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-100" onerror="this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop';">
-                    <div class="absolute inset-0 bg-black/15 group-hover:bg-transparent transition-colors duration-500"></div>
-                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none"></div>
-                    <div class="relative z-10 drop-shadow-md">
-                        <span class="text-cyan-400 text-3xl font-black mb-1 block drop-shadow-lg">05</span>
-                        <h3 class="text-lg font-bold text-white leading-tight">이력서 &<br>자기소개서</h3>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 01. 온드 미디어 마케팅 -->
-    <section id="idx1" class="slide-section">
-        <div class="mb-12 reveal">
-            <span class="text-blue-400 font-bold mb-2 block tracking-widest">PROJECT 01</span>
-            <h2 class="text-5xl font-extrabold">온드미디어 마케팅</h2>
-            <p class="text-slate-400 mt-4 text-lg">자사 채널의 자연 유입(Organic)을 극대화하여 마케팅 비용을 절감했습니다.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            <div class="reveal flex flex-col h-full">
-                <div class="bento-card p-8 flex flex-col h-full">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-brands fa-blogger text-green-500"></i> 블로그 운영 및 확장 성과</h3>
-                    <ul class="text-slate-300 flex-grow flex flex-col justify-center gap-6">
-                        <li class="flex-1 flex items-center gap-5 p-6 bg-slate-800/50 rounded-xl border border-white/5 w-full">
-                            <i class="fa-solid fa-chart-line text-emerald-400 text-3xl"></i>
-                            <div>
-                                <strong class="text-white text-lg block mb-1">최적화블로그 5개 이상 운영</strong>
-                                <span class="text-sm text-emerald-400 font-bold">일평균 방문자수 500명 이상 유지</span>
-                            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+            <!-- Profile Data -->
+            <div class="lg:col-span-4 reveal">
+                <div class="border-t-2 border-gray-900 pt-6">
+                    <h3 class="text-xl font-bold mb-8">Profile</h3>
+                    <h4 class="text-3xl font-black mb-8">박 남 준</h4>
+                    <ul class="space-y-5 text-sm">
+                        <li class="flex flex-col gap-1 border-b border-gray-200 pb-4">
+                            <span class="label-sm">Age</span>
+                            <span class="text-lg font-medium text-gray-900">1995. 09. 19</span>
                         </li>
-                        <li class="flex-1 flex items-center gap-5 p-6 bg-slate-800/50 rounded-xl border border-white/5 w-full">
-                            <i class="fa-solid fa-arrow-trend-up text-blue-400 text-3xl"></i>
-                            <div>
-                                <strong class="text-white text-lg block mb-1">월 문의건 상승</strong>
-                                <span class="text-sm text-emerald-400 font-bold">70건 ➔ 200건으로 단기간 성장</span>
-                            </div>
+                        <li class="flex flex-col gap-1 border-b border-gray-200 pb-4">
+                            <span class="label-sm">Career</span>
+                            <span class="text-lg font-medium text-gray-900">마케팅팀 파트장</span>
+                            <span class="text-gray-500">팀테헤란 / 팀히든 (2023~2025)</span>
                         </li>
-                        <li class="flex-1 flex items-center gap-5 p-6 bg-slate-800/50 rounded-xl border border-white/5 w-full">
-                            <i class="fa-solid fa-network-wired text-purple-400 text-3xl"></i>
-                            <div>
-                                <strong class="text-white text-lg block mb-1">신규 블로그 육성 및 성장</strong>
-                                <span class="text-sm text-slate-400 block leading-relaxed">10개 이상의 신규 블로그를<br><span class="text-emerald-400 font-bold">일평균 방문자수 200명 이상으로 확장</span></span>
-                            </div>
+                        <li class="flex flex-col gap-1 border-b border-gray-200 pb-4">
+                            <span class="label-sm">Military</span>
+                            <span class="text-lg font-medium text-gray-900">육군 만기 전역</span>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="reveal flex flex-col h-full">
-                <div class="bento-card p-8 flex flex-col h-full">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-hashtag text-red-500"></i> SNS & 바이럴 마케팅</h3>
-                    <div class="flex-grow flex flex-col justify-center gap-6">
-                        <div class="flex-1 bg-slate-800/50 rounded-xl p-6 border border-white/5 flex flex-col justify-center w-full">
-                            <div class="flex items-center gap-3 mb-2">
-                                <i class="fa-brands fa-youtube text-red-500 text-2xl"></i>
-                                <span class="text-white font-bold text-lg">유튜브 채널 성장</span>
+
+            <!-- Competencies -->
+            <div class="lg:col-span-8">
+                <div class="border-t-2 border-gray-900 pt-6 reveal reveal-delay-1">
+                    <h3 class="text-xl font-bold mb-8">Skills</h3>
+
+                    <div class="mb-10">
+                        <p class="label-sm mb-4 text-orange-600">Marketing</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 text-sm border-t border-gray-200">
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-share-nodes text-orange-600"></i> 온드미디어 마케팅
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">네이버 블로그, 인스타그램, 유튜브 등 운영</p>
                             </div>
-                            <p class="text-slate-400 text-sm mb-2">유튜브 컨텐츠 주제, 대본 기획 및 촬영 보조</p>
-                            <p class="text-emerald-400 font-bold">유튜브 초기 운영부터 구독자 2만 명 달성 (현재 3만 명)</p>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-bullhorn text-orange-600"></i> 브랜드 마케팅
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">브랜드의 전체적인 방향성과 타겟 분석 및 마케팅 매체 정립</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-pen-nib text-orange-600"></i> 컨텐츠 마케팅
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">브랜딩, 광고에 필요한 컨텐츠 기획 및 제작</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass-chart text-orange-600"></i> SEO 최적화
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">검색 노출을 위한 키워드 및 SEO 최적화</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-line text-orange-600"></i> 데이터 분석
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">GA4, 서치어드바이저, 블랙키위 등 데이터 분석</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-users-viewfinder text-orange-600"></i> CRM 마케팅
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">고객 생애 관리 컨텐츠 발행 및 고객 관리</p>
+                            </div>
                         </div>
-                        <div class="flex-1 bg-slate-800/50 rounded-xl p-6 border border-white/5 flex flex-col justify-center w-full">
-                            <div class="flex items-center gap-3 mb-2">
-                                <i class="fa-solid fa-share-nodes text-pink-500 text-2xl"></i>
-                                <span class="text-white font-bold text-lg">공식 계정 최적화 운영</span>
+                    </div>
+
+                    <div>
+                        <p class="label-sm mb-4 text-orange-600">Creative & Tools</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 text-sm border-t border-gray-200">
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-brands fa-figma text-orange-600"></i> Figma
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">컨텐츠, 이미지 제작에 활용</p>
                             </div>
-                            <p class="text-slate-400 text-sm">알고리즘 최적화, 카드뉴스, 홍보 컨텐츠 제작 및 공식 계정 운영</p>
-                        </div>
-                        <div class="flex-1 bg-slate-800/50 rounded-xl p-6 border border-white/5 flex flex-col justify-center w-full">
-                            <div class="flex items-center gap-3 mb-2">
-                                <i class="fa-solid fa-users text-blue-400 text-2xl"></i>
-                                <span class="text-white font-bold text-lg">지식인, 카페 바이럴 마케팅</span>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-orange-600"></i> Photoshop, Illustrator
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">어도비 툴 활용 가능</p>
                             </div>
-                            <p class="text-emerald-400 font-bold mb-2">카페 회원수 6000명 달성</p>
-                            <p class="text-slate-400 text-sm">지식인 문의건 월 40건 ➔ 월 500건 증가</p>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-file-powerpoint text-orange-600"></i> Excel, PPT
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">기획안, 보고서 제작 능숙</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-robot text-orange-600"></i> AI Tools
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">AI 활용이 필요한 업무에 능숙</p>
+                            </div>
+                            <div class="py-4 border-b border-gray-200 md:col-span-2">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-video text-orange-600"></i> Video Editing
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed">제품 소개 영상, 숏폼 제작 가능</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -390,242 +340,580 @@
         </div>
     </section>
 
-    <!-- 02. 카드뉴스 & 디자인 컨텐츠 기획 및 제작 -->
-    <section id="idx2" class="slide-section">
-        <div class="mb-12 reveal">
-            <span class="text-yellow-400 font-bold mb-2 block tracking-widest">PROJECT 02</span>
-            <h2 class="text-5xl font-extrabold">카드뉴스 & 디자인 컨텐츠 기획 및 제작</h2>
-            <p class="text-slate-400 mt-4 text-lg">인스타그램 카드뉴스와 온드미디어 마케팅에 필요한 디자인 컨텐츠를 직접 제작합니다.</p>
+    <!-- 3. Projects Index Section -->
+    <section id="projects" class="section-padding max-w-7xl mx-auto">
+        <div class="mb-16 reveal">
+            <h2 class="label-sm mb-4">Case Studies</h2>
+            <p class="h-section">Selected Projects</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div class="reveal">
-                <!-- 박스 테두리 무채색 통일 -->
-                <div id="overlay-detail2" class="bento-card cursor-pointer relative overflow-hidden h-64 border-white/10 group" onclick="toggleDetail('detail2', '카드뉴스 자세히 보기 ▼', '접기 ▲')">
-                    <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop" alt="Card News Thumbnail" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center group-hover:bg-black/40 transition-colors">
-                        <i class="fa-solid fa-video text-3xl text-yellow-400 mb-3"></i>
-                        <p class="text-white font-bold text-lg tracking-wide toggle-text">카드뉴스 자세히 보기 ▼</p>
+
+        <!-- Index Table -->
+        <div class="border-t-main">
+            <a href="#idx1" class="reveal group flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="flex gap-8 items-baseline">
+                    <span class="text-xl font-black text-gray-400 group-hover:text-orange-600 transition-colors">01</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">온드미디어 마케팅</h3>
+                        <p class="text-sm text-gray-500">블로그, SNS 최적화 및 바이럴 성과</p>
                     </div>
                 </div>
-                <div id="detail2" class="max-h-0 overflow-hidden expandable-content mt-4 rounded-2xl border border-white/5 bg-slate-800">
-                    <div class="p-4 text-center text-slate-400 text-sm border-b border-white/5">SNS 동영상 및 카드뉴스 뷰어</div>
-                    <div class="flex justify-center p-6">
-                        <iframe class="w-full max-w-[315px] aspect-[9/16] rounded-xl shadow-2xl bg-black" src="https://streamable.com/e/l7t2ze" title="Streamable video player" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                <div class="hidden md:block text-gray-400 group-hover:text-gray-900"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+            <a href="#idx2" class="reveal reveal-delay-1 group flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="flex gap-8 items-baseline">
+                    <span class="text-xl font-black text-gray-400 group-hover:text-orange-600 transition-colors">02</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">디자인 컨텐츠 기획 및 제작</h3>
+                        <p class="text-sm text-gray-500">카드뉴스, 포스터 등 비주얼 에셋</p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="reveal">
-                <!-- 박스 테두리 무채색 통일 -->
-                <div class="bento-card cursor-pointer relative overflow-hidden h-64 border-white/10 group" onclick="openDesignModal()">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop" alt="Detail Page Thumbnail" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center group-hover:bg-black/40 transition-colors">
-                        <i class="fa-solid fa-up-right-and-down-left-from-center text-3xl text-yellow-400 mb-3"></i>
-                        <p class="text-white font-bold text-lg tracking-wide">디자인 컨텐츠 자세히 보기 ▼</p>
+                <div class="hidden md:block text-gray-400 group-hover:text-gray-900"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+            <a href="#idx3" class="reveal reveal-delay-2 group flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="flex gap-8 items-baseline">
+                    <span class="text-xl font-black text-gray-400 group-hover:text-orange-600 transition-colors">03</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">CRM 마케팅 & 앱 기획</h3>
+                        <p class="text-sm text-gray-500">이탈 방지 뉴스레터 및 자동화 앱 기획</p>
                     </div>
                 </div>
-            </div>
+                <div class="hidden md:block text-gray-400 group-hover:text-gray-900"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+            <a href="#idx4" class="reveal reveal-delay-3 group flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="flex gap-8 items-baseline">
+                    <span class="text-xl font-black text-gray-400 group-hover:text-orange-600 transition-colors">04</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">가상 브랜드 제작</h3>
+                        <p class="text-sm text-gray-500">브랜드 컨셉, 타겟, 웹페이지 기획 및 제작</p>
+                    </div>
+                </div>
+                <div class="hidden md:block text-gray-400 group-hover:text-gray-900"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
         </div>
     </section>
+
+    <!-- ==========================================
+         PROJECT DETAILS (CASE STUDIES)
+         ========================================== -->
+
+    <!-- 01. 온드미디어 마케팅 -->
+    <article id="idx1" class="section-padding max-w-7xl mx-auto border-t-main">
+        <div class="flex items-baseline gap-6 mb-12 reveal">
+            <span class="h-number text-orange-600">01</span>
+            <h2 class="h-section">온드미디어 마케팅</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Left Context -->
+            <div class="lg:col-span-4 space-y-10 reveal">
+                <div>
+                    <h3 class="label-sm mb-3">Goal</h3>
+                    <p id="copy-ai-01" class="text-gray-700 text-lg leading-relaxed">
+                        자사 채널의 자연 유입을 극대화하여 마케팅 비용을 절감하고 잠재 고객을 확보했습니다.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="label-sm mb-3">What I Did</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>- 네이버 블로그 최적화 및 육성</li>
+                        <li>- 유튜브 채널 콘텐츠 기획</li>
+                        <li>- 커뮤니티 바이럴 마케팅</li>
+                        <li>- 공식 SNS 최적화 운영</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Results -->
+            <div class="lg:col-span-8 space-y-16">
+                <!-- Block 1 -->
+                <div class="reveal reveal-delay-1">
+                    <h4 class="text-2xl font-bold mb-8">블로그 운영 및 확장 성과</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="border-l-2 border-orange-600 pl-6 py-2">
+                            <p class="label-sm mb-2">최적화 블로그 5개 이상 운영</p>
+                            <p class="text-4xl font-black text-gray-900 mb-2">500<span class="text-xl font-normal text-gray-500">명+</span></p>
+                            <p class="text-sm text-gray-600">일평균 방문자수 지속 유지</p>
+                        </div>
+                        <div class="border-l-2 border-orange-600 pl-6 py-2">
+                            <p class="label-sm mb-2">월 문의건 단기간 성장</p>
+                            <div class="flex items-baseline gap-2 mb-2">
+                                <span class="text-lg font-bold text-gray-900">3개월 내</span>
+                                <span class="text-2xl text-gray-400 line-through">70건</span>
+                                <span class="text-2xl font-bold text-gray-400">&rarr;</span>
+                                <span class="text-4xl font-black text-gray-900">200<span class="text-xl font-normal text-gray-500">건</span></span>
+                            </div>
+                            <p class="text-sm text-gray-600">블로그를 통한 자연 유입 고객 확보</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 bg-gray-50 p-6 text-sm text-gray-600">
+                        <strong class="text-gray-900">신규 블로그 육성:</strong> 10개 이상의 신규 블로그를 일평균 방문자수 200명 이상의 블로그로 육성해왔습니다.
+                    </div>
+                </div>
+
+                <!-- Block 2 -->
+                <div class="pt-10 border-t border-gray-200 reveal">
+                    <h4 class="text-2xl font-bold mb-8">SNS & 바이럴 마케팅</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="reveal reveal-delay-1 flex h-full flex-col">
+                            <p class="font-bold text-gray-900 mb-2">유튜브 채널 기획</p>
+                            <p class="text-sm text-gray-600 mb-4 min-h-[4.5rem]">초기 기획부터 참여하여 유튜브 컨텐츠<br>주제, 대본 기획 및 촬영 보조 수행</p>
+                            <p class="text-2xl font-black text-orange-600">30,000<span class="text-sm font-bold text-gray-900"> 구독자</span></p>
+                        </div>
+                        <div class="reveal reveal-delay-2 flex h-full flex-col">
+                            <p class="font-bold text-gray-900 mb-2">커뮤니티 바이럴</p>
+                            <p class="text-sm text-gray-600 mb-4 min-h-[4.5rem]">- 공식 카페, 지식인 마케팅 운영<br>- 카페 회원 6,000명으로 성장<br>지식인 문의건 월 40건 -&gt; 500건으로 성장</p>
+                            <p class="text-2xl font-black text-orange-600">6,000<span class="text-sm font-bold text-gray-900"> 회원</span></p>
+                        </div>
+                        <div class="reveal reveal-delay-3 flex h-full flex-col">
+                            <p class="font-bold text-gray-900 mb-2">공식 SNS 최적화 운영</p>
+                            <p class="text-sm text-gray-600 mb-4 min-h-[4.5rem]">인스타그램, 티스토리, 브런치 등<br>알고리즘 최적화, 카드뉴스, 홍보 컨텐츠 제작 및 계정 운영</p>
+                            <p class="text-2xl font-black text-orange-600">공식 SNS<span class="text-sm font-bold text-gray-900"> 운영</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- 02. 카드뉴스 & 디자인 컨텐츠 -->
+    <article id="idx2" class="section-padding max-w-7xl mx-auto border-t-main">
+        <div class="flex items-baseline gap-6 mb-12 reveal">
+            <span class="h-number text-orange-600">02</span>
+            <h2 class="h-section">디자인 컨텐츠 기획 및 제작</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Left Context -->
+            <div class="lg:col-span-4 space-y-10 reveal">
+                <div>
+                    <h3 class="label-sm mb-3">Goal</h3>
+                    <p id="copy-ai-02" class="text-gray-700 text-lg leading-relaxed">
+                        인스타그램 카드뉴스와 온드미디어 운영에 필요한 시각적 콘텐츠를 기획하고 직접 제작하여 브랜드 메시지를 전달했습니다.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="label-sm mb-3">What I Did</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>- SNS 카드뉴스/영상 콘텐츠 제작</li>
+                        <li>- 상세페이지 및 포스터 기획/디자인</li>
+                        <li>- 블로그 스킨 및 비주얼 에셋 디자인</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Results (Visuals) -->
+            <div class="lg:col-span-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <!-- Video Preview -->
+                    <div class="reveal reveal-delay-1">
+                        <div id="cardNewsPreview" class="aspect-square bg-gray-100 mb-4 relative group cursor-pointer overflow-hidden" onclick="openCardNewsModal()">
+                            <img src="https://i.imgur.com/NUAl5CJ.png" alt="SNS 카드뉴스 썸네일" class="w-full h-full object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-500">
+                            <div class="absolute inset-0 bg-gray-900/10 group-hover:bg-transparent transition-colors"></div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-black/30 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg backdrop-blur-md border border-white/40 group-hover:bg-black/45 group-hover:scale-110 transition-all">
+                                    <i class="fa-solid fa-play text-xl ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900">SNS 영상 및 카드뉴스</h4>
+                        <p class="text-sm text-gray-500">클릭 시 크게 재생</p>
+                    </div>
+
+                    <!-- Design Modal Trigger -->
+                    <div class="reveal reveal-delay-2">
+                        <div class="aspect-square bg-gray-100 mb-4 relative group cursor-pointer overflow-hidden" onclick="openDesignModal()">
+                            <img src="https://i.imgur.com/tDcx2zc.png" alt="디자인 슬라이드 대표 이미지" class="w-full h-full object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
+                            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/45 to-transparent"></div>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-black/30 backdrop-blur-md border border-white/40 text-white px-5 py-3 text-xs font-bold uppercase tracking-wide shadow-lg flex items-center gap-2 group-hover:bg-black/45 group-hover:scale-105 transition-all">
+                                    View Slides <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-gray-900">그래픽 & 디자인 에셋</h4>
+                        <p class="text-sm text-gray-500">포스터, 상세페이지, 스킨 디자인 모음</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
 
     <!-- 03. CRM 마케팅 -->
-    <section id="idx3" class="slide-section" style="min-height: auto; padding-bottom: 80px;">
-        <div class="mb-12 reveal">
-            <span class="text-orange-400 font-bold mb-2 block tracking-widest">PROJECT 03</span>
-            <h2 class="text-5xl font-extrabold">CRM 마케팅 & 앱 기획</h2>
-            <p class="text-slate-400 mt-4 text-lg">데이터 기반의 타겟팅 뉴스레터와 자체 기획한 리마인드 앱으로 고객 이탈을 방지하고 충성도를 높입니다.</p>
+    <article id="idx3" class="section-padding max-w-7xl mx-auto border-t-main">
+        <div class="flex items-baseline gap-6 mb-12 reveal">
+            <span class="h-number text-orange-600">03</span>
+            <h2 class="h-section">CRM 마케팅 & 앱 기획</h2>
         </div>
 
-        <div class="mb-6 reveal"><h3 class="text-2xl font-bold border-l-4 border-orange-500 pl-4">1. 개인화 타겟팅 뉴스레터</h3></div>
-        <div class="flex flex-col md:flex-row gap-8 mb-16">
-            <div class="flex-1 grid grid-cols-2 gap-4 reveal">
-                <div class="bento-card overflow-hidden border-white/5 relative group cursor-pointer h-full" onclick="openModal('https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=1200&auto=format&fit=crop')">
-                    <img src="https://images.unsplash.com/photo-1557200134-90327ee9fafa?q=80&w=800&auto=format&fit=crop" alt="Newsletter 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:scale-110"></i>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Left Context -->
+            <div class="lg:col-span-4 space-y-10 reveal">
+                <div>
+                    <h3 class="label-sm mb-3">Goal</h3>
+                    <p id="copy-ai-03" class="text-gray-700 text-lg leading-relaxed">
+                        데이터 기반의 타겟팅 커뮤니케이션과 리타겟팅 프로세스 자동화를 통해 고객 이탈을 방지하고 비즈니스 효율을 향상 시켰습니다.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="label-sm mb-3">What I Did</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>- 기존 고객과의 브랜드 신뢰도 강화</li>
+                        <li>- 기존 고객 재방문을 통한 마케팅 비용 절약</li>
+                        <li id="copy-ai-04">- 기존 업무 프로세스 간소화를 통한 업무적 효율성 상승</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Results -->
+            <div class="lg:col-span-8 space-y-20">
+                
+                <!-- Section 1 -->
+                <div class="reveal reveal-delay-1">
+                    <h4 class="text-2xl font-bold mb-4 border-b border-gray-900 pb-4">개인화 타겟팅 뉴스레터</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-8">
+                        <div>
+                            <p id="copy-ai-05" class="text-gray-600 leading-relaxed mb-6">
+                                고객 생애 주기에 맞춘 유용한 콘텐츠를 이메일로 정기 발송하여 브랜드 상기도를 높이고 휴면 고객을 재활성화했습니다.
+                            </p>
+                            <a href="https://parknamjun95.github.io/CARDNEWS/" target="_blank" rel="noopener noreferrer" class="block aspect-[2/1] bg-gray-100 overflow-hidden group relative">
+                                <img src="https://picsum.photos/seed/newsletter-cardnews/900/900" alt="개인화 타겟팅 뉴스레터 카드뉴스" class="w-full h-full object-cover opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-gray-900/10 group-hover:bg-gray-900/0 transition-colors"></div>
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <div class="bg-black/30 backdrop-blur-md border border-white/40 text-white px-5 py-3 text-xs font-bold uppercase tracking-wide shadow-lg flex items-center gap-2 group-hover:bg-black/45 group-hover:scale-105 transition-all">
+                                        View Cardnews <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-gray-50 p-10 h-full flex flex-col justify-center">
+                            <p class="label-sm mb-2 text-gray-500">Key Result</p>
+                            <p class="text-lg font-bold text-gray-900 mb-1">기존 고객 재방문율 증가</p>
+                            <p class="text-7xl font-black text-gray-900 tracking-tighter">45.8<span class="text-3xl text-orange-600">%</span></p>
+                        </div>
                     </div>
                 </div>
-                <div class="bento-card overflow-hidden border-white/5 relative group cursor-pointer h-full" onclick="openModal('https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=1200&auto=format&fit=crop')">
-                    <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?q=80&w=800&auto=format&fit=crop" alt="Newsletter 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:scale-110"></i>
+
+                <!-- Section 2 -->
+                <div class="reveal">
+                    <h4 class="text-2xl font-bold mb-4 border-b border-gray-900 pb-4">리타겟팅 자동화 : 리마인드 앱 기획</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-stretch mt-8">
+                        <div class="flex h-full flex-col justify-between gap-6 pb-12">
+                            <p id="copy-ai-06" class="text-gray-600 leading-relaxed">
+                                잠재 고객 이탈을 막기 위해 커뮤니케이션 기록과 재연락 시점을 관리하는 사내용 리마인드 앱을 기획 및 도입했습니다.
+                            </p>
+                            <ul class="text-sm text-gray-800 space-y-4 -translate-y-2">
+                                <li class="flex gap-3 border-l-2 border-gray-200 pl-4">
+                                    <strong class="min-w-[80px]">효율 향상</strong> 
+                                    <span id="copy-ai-07" class="text-gray-600">작업 자동화로 리소스 절감 (평균값 0.3일 감소)</span>
+                                </li>
+                                <li class="flex gap-3 border-l-2 border-gray-200 pl-4">
+                                    <strong class="min-w-[80px]">이탈 방지</strong> 
+                                    <span class="text-gray-600">실시간 응대 체계 구축 (중간값 3일 감소)</span>
+                                </li>
+                                <li class="flex gap-3 border-l-2 border-gray-200 pl-4">
+                                    <strong class="min-w-[80px]">관리 편의</strong> 
+                                    <span id="copy-ai-08" class="text-gray-600">전송 로그 자동 기록 아카이빙</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 px-10 pb-10 pt-0 flex flex-col items-start">
+                            <p class="label-sm mb-2 text-gray-500">Key Result</p>
+                            <p class="text-lg font-bold text-gray-900 mb-1">도입 후 수임율 (KPI)</p>
+                            <p class="text-6xl font-black text-gray-900 tracking-tighter">+11.6<span class="text-2xl text-orange-600">%</span></p>
+                            <p class="text-sm font-medium text-gray-500 mt-2">KPI 성장률 88.5% 달성</p>
+                            <a href="https://parknamjun95.github.io/remindapp/" target="_blank" rel="noopener noreferrer" class="btn-editorial mt-8">
+                                View remind app &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- 04. 가상 브랜드 제작 -->
+    <article id="idx4" class="section-padding max-w-7xl mx-auto border-t-main">
+        <div class="flex items-baseline gap-6 mb-12 reveal">
+            <span class="h-number text-orange-600">04</span>
+            <h2 class="h-section">가상 브랜드 제작</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Left Context -->
+            <div class="lg:col-span-4 space-y-10 reveal">
+                <div>
+                    <h3 class="label-sm mb-3">Objective</h3>
+                    <p id="copy-ai-09" class="text-gray-700 text-lg leading-relaxed">
+                        가상의 브랜드를 직접 설정하고, 타겟과 브랜드 방향성에 맞는 웹페이지까지 구현하여 브랜드 기획 역량을 보여줍니다.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="label-sm mb-3">What I Did</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li>- 가상 브랜드 컨셉 및 네이밍 설정</li>
+                        <li>- 타겟 고객과 브랜드 톤앤매너 정리</li>
+                        <li>- 메인 카피, 페이지 구성, 비주얼 방향 기획</li>
+                        <li>- AI와 디자인 툴을 활용한 웹페이지 제작</li>
+                    </ul>
+                    <div class="mt-5 flex items-center gap-2">
+                        <span class="tool-icon" aria-label="Codex">
+                            <img src="https://i.imgur.com/hFn64oC.png" alt="Codex">
+                            <span class="tool-tip">Codex</span>
+                        </span>
+                        <span class="tool-icon" aria-label="Figma">
+                            <img src="https://i.imgur.com/HnVcgOV.png" alt="Figma">
+                            <span class="tool-tip">Figma</span>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="reveal flex-1 flex flex-col">
-                <!-- 테두리 무채색 적용 (border-white/10) -->
-                <div class="bento-card p-10 bg-orange-900/10 border-white/10 flex flex-col justify-center h-full">
-                    <p class="text-slate-400 font-bold uppercase tracking-widest mb-2">기존 고객 재방문율 증가</p>
-                    <div class="flex items-baseline gap-4"><span class="text-7xl font-black text-white">45.8<span class="text-4xl text-orange-400">%</span></span></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="mt-8 mb-6 reveal"><h3 class="text-2xl font-bold border-l-4 border-orange-500 pl-4">2. 리타겟팅 자동화 : 리마인드 앱</h3></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch pb-10">
-            <div class="reveal flex justify-center h-full">
-                <!-- 테두리 무채색 적용 (border-white/10) -->
-                <div class="bento-card cursor-pointer relative overflow-hidden border-white/10 flex items-center justify-center p-6 bg-gradient-to-tr from-orange-900/20 to-transparent group w-full h-full aspect-video" onclick="openSlideModal()">
-                    <div class="relative w-full h-full rounded-xl overflow-hidden bg-slate-800">
-                        <img src="https://i.imgur.com/0e4l4TL.png" alt="App Interface Mockup" class="w-full h-full object-contain opacity-90 transition-transform duration-700 group-hover:scale-95" onerror="this.onerror=null; this.src='https://i.imgur.com/0e4l4TL.jpeg';">
-                        <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300 z-20">
-                            <i class="fa-solid fa-expand text-4xl text-orange-400 mb-3"></i>
-                            <p class="text-white font-bold text-lg tracking-wide text-center px-4">기획안 슬라이드 펼쳐보기</p>
+            <!-- Right Results -->
+            <div class="lg:col-span-8 space-y-16">
+                <div class="reveal reveal-delay-1">
+                    <h4 class="text-2xl font-bold mb-8">sunfreeclub Brand Project</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-200 text-center">
+                        <div class="flex h-full flex-col items-center">
+                            <p class="label-sm py-4 border-b border-gray-200 text-orange-600 w-full">Brand Concept</p>
+                            <p class="font-bold text-gray-900 mt-4 mb-2">sunfreeclub</p>
+                            <p id="copy-ai-10" class="text-sm text-gray-600 leading-relaxed">태양이 주는 이로움의 값이 무료라는 점에 대한 경외심을 바탕으로 창작한 고프코어 웨어 브랜드입니다.</p>
+                        </div>
+                        <div class="flex h-full flex-col items-center">
+                            <p class="label-sm py-4 border-b border-gray-200 text-orange-600 w-full">Target</p>
+                            <p class="font-bold text-gray-900 mt-4 mb-2">패션과 스포츠를 즐기는 20·30대</p>
+                            <p class="text-sm text-gray-600 leading-relaxed">가격보다 브랜드의 가치와 태도에 더욱 민감하게 반응하며, 패션과 스포츠를 즐기는 현 젊은 세대를 타겟으로 공략했습니다.</p>
+                        </div>
+                        <div class="flex h-full flex-col items-center">
+                            <p class="label-sm py-4 border-b border-gray-200 text-orange-600 w-full">Execution</p>
+                            <p class="font-bold text-gray-900 mt-4 mb-2">기획부터 구현까지</p>
+                            <p id="copy-ai-11" class="text-sm text-gray-600 leading-relaxed">AI와 디자인 툴을 활용하여 브랜드 메시지, 화면 구성, 이미지 활용, 웹 구현까지 하나의 흐름으로 제작했습니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 border-t border-gray-200 pt-12">
+                        <div class="group relative overflow-hidden bg-gray-100">
+                            <div class="grid grid-cols-2 gap-0 items-stretch">
+                                <div class="aspect-[4/3] overflow-hidden">
+                                    <img src="https://i.imgur.com/qA876Tp.png" alt="썬프리클럽 웹페이지 썸네일" class="w-full h-full object-cover opacity-100 transition-opacity duration-500">
+                                </div>
+                                <div class="aspect-[4/3] overflow-hidden">
+                                    <img src="https://i.imgur.com/GOUccvi.png" alt="썬프리클럽 룩북 이미지" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <a href="https://parknamjun95.github.io/SUNFREECLUB/" target="_blank" rel="noopener noreferrer" class="ios-link-button text-sm font-bold uppercase tracking-wide bg-white/80 hover:bg-white/90">
+                                    View Website <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="reveal flex flex-col justify-center gap-6 h-full">
-                <div class="bento-card p-8 border-white/5 h-full flex flex-col justify-center">
-                    <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-chart-line text-orange-400"></i> 앱 도입 후 성과</h3>
-                    <ul class="space-y-4 text-slate-300">
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-orange-500 mt-1"></i> <div><strong class="text-white">작업 자동화로 업무 효율 향상 :</strong> 평균값 0.3일 감소</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-orange-500 mt-1"></i> <div><strong class="text-white">실시간 응대로 잠재 고객 이탈 방지 :</strong> 중간값 3일 감소</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-check text-orange-500 mt-1"></i> <div><strong class="text-white">전송 로그 자동 기록으로</strong> 관리편의성 증대</div></li>
-                    </ul>
-                </div>
-                <!-- 테두리 무채색 적용 (border-white/10) -->
-                <div class="bento-card p-8 border-white/10 bg-orange-900/10 flex items-center justify-between">
-                    <div>
-                        <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-1">도입 후 수임율(KPI)</p>
-                        <p class="text-slate-300 text-sm">(KPI 성장률 88.5%)</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-5xl font-black text-orange-400">+11.6%</span>
+        </div>
+    </article>
+
+    <!-- 5. Resume (Final Block) -->
+    <section id="resume" class="section-padding max-w-7xl mx-auto border-t-main mb-20">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
+            <div class="md:col-span-4 reveal">
+                <h2 class="h-section mb-6">Let's Work<br>Together.</h2>
+                <p id="copy-ai-12" class="text-gray-600 mb-8">성장을 멈추지 않는 마케터,<br>박남준의 전체 이력서를 확인하세요.</p>
+                <button onclick="openResumeModal()" class="btn-editorial w-full justify-center" id="overlay-resumeDetail">
+                    <span class="toggle-text">View Full Resume</span>
+                </button>
+            </div>
+            <div class="md:col-span-8 reveal reveal-delay-1">
+                <!-- Resume Summary -->
+                <div class="border-t border-gray-900 pt-6">
+                    <h3 class="label-sm mb-6">Experience Summary</h3>
+                    <div class="mb-6">
+                        <div class="flex justify-between items-baseline mb-2">
+                            <h4 class="text-xl font-bold text-gray-900">팀테헤란 / 팀히든</h4>
+                            <span class="text-sm font-medium text-gray-500">2023 - 2025</span>
+                        </div>
+                        <p class="text-orange-600 font-bold text-sm mb-3">마케팅팀 파트장</p>
+                        <ul class="text-gray-600 text-sm leading-relaxed grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                            <li>• 온드미디어 마케팅</li>
+                            <li>• 콘텐츠 제작</li>
+                            <li>• AI 기반 업무 자동화 구축 및 컨텐츠 제작</li>
+                            <li>• 홈페이지 기획 및 관리</li>
+                            <li>• 데이터 분석</li>
+                            <li>• 디지털 마케팅</li>
+                            <li>• 바이럴 마케팅</li>
+                            <li>• 광고 키워드 관리</li>
+                            <li>• 홈페이지 SEO</li>
+                            <li>• 템플릿 제작</li>
+                            <li>• 협력사 · 고객 관리 및 CS</li>
+                            <li>• 데이터 분석 및 통계</li>
+                            <li>• 유관 부서 협업 및 일정 조율</li>
+                            <li>• 캠페인 및 콘텐츠 기획 · 제작</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 04. 홈페이지 기획 및 관리 -->
-    <section id="idx4" class="slide-section" style="padding-top: 60px;">
-        <div class="mb-12 reveal">
-            <span class="text-purple-400 font-bold mb-2 block tracking-widest">PROJECT 04</span>
-            <h2 class="text-5xl font-extrabold">홈페이지 기획 및 관리</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- 개별 호버 색상 제거 -->
-            <div class="reveal h-full"><div class="bento-card overflow-hidden group h-full"><div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-bold text-white">웹 커머스 리뉴얼</h4></div></div></div>
-            <div class="reveal h-full"><div class="bento-card overflow-hidden group h-full"><div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-bold text-white">랜딩페이지 기획</h4></div></div></div>
-            <div class="reveal h-full"><div class="bento-card overflow-hidden group h-full"><div class="h-48 overflow-hidden"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-bold text-white">프로모션 웹 제작</h4></div></div></div>
-        </div>
-    </section>
+    <!-- Pages rebuild marker: resume assets published for GitHub Pages -->
+    <!-- Footer -->
+    <footer class="py-10 text-center border-t border-gray-200 bg-gray-50">
+        <p class="label-sm text-gray-400">&copy; 2026 Park Nam Jun Portfolio. All rights reserved.</p>
+    </footer>
 
-    <!-- 06. Resume & Essay -->
-    <section id="resume" class="slide-section">
-        <h2 class="text-4xl font-bold mb-12 reveal">Resume</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="reveal"><div class="bento-card p-10 h-full"><div><h3 class="text-xl font-bold text-emerald-400 mb-8 uppercase">Experience</h3><div class="space-y-8"><div class="border-l-2 border-emerald-500/30 pl-6 relative"><div class="absolute w-3 h-3 bg-emerald-500 rounded-full -left-[7.5px] top-1.5"></div><h4 class="font-bold">팀테헤란 / 팀히든</h4><p class="text-sm text-slate-500 mb-2">마케팅 총괄 | 2023 - 2025</p></div></div></div></div></div>
-            <div class="reveal">
-                <!-- 테두리 무채색 적용 (border-white/10) -->
-                <div id="overlay-resumeDetail" class="bento-card cursor-pointer h-full min-h-[250px] border-white/10 group flex flex-col items-center justify-center bg-slate-800/50 hover:bg-slate-800" onclick="toggleDetail('resumeDetail', '이력서 펼쳐보기 ▼', '이력서 접기 ▲')"><i class="fa-solid fa-file-contract text-5xl text-emerald-400 mb-4"></i><p class="text-white font-bold text-2xl toggle-text">이력서 펼쳐보기 ▼</p></div>
-            </div>
-        </div>
-        <div id="resumeDetail" class="max-h-0 overflow-hidden transition-all duration-700 mt-4 rounded-2xl border border-white/5 bg-slate-800"><div class="p-8 text-slate-300">상세 이력서 내용이 표시됩니다.</div></div>
-    </section>
+    <!-- ==========================================
+         MODALS (Design updated to Minimal style)
+         ========================================== -->
 
-    <footer class="py-20 text-center text-slate-500 border-t border-white/5 mt-20"><p>© 2026 Park Nam Jun Portfolio.</p></footer>
-
-    <!-- Modals -->
     <!-- 디자인 컨텐츠 갤러리 모달 -->
-    <div id="designModal" class="fixed inset-0 z-[4000] hidden bg-black/95 flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
-        <button class="absolute top-6 right-6 text-white text-4xl z-50 hover:text-emerald-400 transition-colors" onclick="closeDesignModal()">&times;</button>
-        <div class="w-full max-w-4xl relative flex flex-col items-center">
-            <h3 id="designModalTitle" class="text-lg md:text-xl font-semibold text-white mb-6 tracking-wide text-center bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-white/20 shadow-lg"></h3>
-            <div class="relative w-full flex items-center justify-center h-[70vh]">
-                <button onclick="changeDesign(-1)" class="absolute left-0 md:-left-16 text-white/50 hover:text-emerald-400 text-5xl z-50 p-4 transition-colors">
+    <div id="designModal" class="fixed inset-0 z-[4000] hidden bg-white/95 backdrop-blur-sm flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-gray-900 text-4xl z-50 hover:text-orange-600 transition-colors" onclick="closeDesignModal()">&times;</button>
+        <div class="w-full max-w-6xl relative flex flex-col items-center h-[88vh] -mt-4">
+            <h3 id="designModalTitle" class="font-['Pretendard'] text-xl font-black text-gray-900 mb-5 tracking-normal">Design Slides</h3>
+            <div class="relative w-full flex items-center justify-center flex-grow overflow-hidden">
+                <button onclick="changeDesignSlide(-1)" aria-label="Previous design slide" title="Previous slide" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-xl z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all bg-black/30 hover:bg-black/45 backdrop-blur-md shadow-xl border border-white/40">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <div id="designModalImgContainer" class="w-full h-full overflow-y-auto custom-scrollbar rounded-xl border border-white/10 shadow-2xl bg-slate-900/50 block transition-opacity duration-300">
+                <div id="designModalImgContainer" class="w-full h-full bg-gray-100 border border-gray-200 flex flex-col items-center justify-center p-4 transition-opacity duration-300">
                 </div>
-                <button onclick="changeDesign(1)" class="absolute right-0 md:-right-16 text-white/50 hover:text-emerald-400 text-5xl z-50 p-4 transition-colors">
+                <button onclick="changeDesignSlide(1)" aria-label="Next design slide" title="Next slide" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-xl z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all bg-black/30 hover:bg-black/45 backdrop-blur-md shadow-xl border border-white/40">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
-            <p class="text-slate-400 mt-4 text-sm"><i class="fa-solid fa-arrows-up-down"></i> 이미지가 길 경우 아래로 스크롤 가능합니다.</p>
+            <p id="designSlideCounter" class="label-sm mt-6 text-gray-400">1 / 5</p>
         </div>
     </div>
 
     <!-- 기획안 슬라이드 모달 -->
-    <div id="slideModal" class="fixed inset-0 z-[3000] hidden bg-black/95 flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
-        <button class="absolute top-6 right-6 text-white text-4xl z-50 hover:text-emerald-400" onclick="closeSlideModal()">&times;</button>
-        <div class="w-full max-w-5xl relative mt-4 px-10 sm:px-16 h-[75vh] flex items-center">
-            <button onclick="scrollSlider(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 p-2"><i class="fa-solid fa-chevron-left"></i></button>
-            <div id="appSliderContainer" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar items-center scroll-smooth w-full h-full bg-slate-900/50 rounded-2xl shadow-2xl">
-                <img src="https://i.imgur.com/0e4l4TL.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/L0nViCY.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/TZiP4zB.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/CwQpjFI.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/e57ZdvY.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/D6PIyZ8.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/4elNnAL.png" class="w-full h-full object-contain snap-center shrink-0">
-                <img src="https://i.imgur.com/FFU8gF2.png" class="w-full h-full object-contain snap-center shrink-0">
+    <div id="slideModal" class="fixed inset-0 z-[3000] hidden bg-white/95 backdrop-blur-sm flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-gray-900 text-4xl z-50 hover:text-orange-600" onclick="closeSlideModal()">&times;</button>
+        <div class="w-full max-w-[806px] relative mt-4 px-12 h-[56vh] flex items-center">
+            <button onclick="changeAppSlide(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-900 text-5xl z-50 p-2"><i class="fa-solid fa-chevron-left"></i></button>
+            <div id="appSliderContainer" class="w-full h-full bg-gray-100 border border-gray-200 flex items-center justify-center transition-opacity duration-200">
             </div>
-            <button onclick="scrollSlider(1)" class="absolute right-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-emerald-400 text-5xl z-50 p-2"><i class="fa-solid fa-chevron-right"></i></button>
+            <button onclick="changeAppSlide(1)" class="absolute right-0 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-900 text-5xl z-50 p-2"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
+        <p id="appSlideCounter" class="label-sm mt-6 text-gray-400">1 / 8</p>
     </div>
 
     <!-- 일반 이미지 모달 -->
-    <div id="imageModal" class="fixed inset-0 z-[2000] hidden bg-black/90 flex items-center justify-center p-4 sm:p-8 cursor-pointer opacity-0 transition-opacity duration-300" onclick="closeModal()">
-        <img id="modalImage" src="" class="max-w-[90vw] max-h-[90vh] object-contain rounded-xl transform scale-95 transition-transform duration-300">
+    <div id="imageModal" class="fixed inset-0 z-[2000] hidden bg-white/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 cursor-pointer opacity-0 transition-opacity duration-300" onclick="closeModal()">
+        <img id="modalImage" src="" class="max-w-[90vw] max-h-[90vh] object-contain transform scale-95 transition-transform duration-300 border border-gray-200 shadow-2xl">
+    </div>
+
+    <!-- 카드뉴스 영상 모달 -->
+    <div id="cardNewsModal" class="fixed inset-0 z-[2500] hidden bg-white/95 backdrop-blur-sm flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-gray-900 text-4xl z-50 hover:text-orange-600 transition-colors" onclick="closeCardNewsModal()">&times;</button>
+        <div class="w-full max-w-[608px] aspect-square bg-black shadow-2xl transform scale-95 transition-transform duration-300" id="cardNewsModalFrame"></div>
+    </div>
+
+    <!-- Resume PDF Modal -->
+    <div id="resumeModal" class="fixed inset-0 z-[2600] hidden bg-white/95 backdrop-blur-sm flex-col items-center justify-center p-4 sm:p-8 opacity-0 transition-opacity duration-300">
+        <button class="absolute top-6 right-6 text-gray-900 text-4xl z-50 hover:text-orange-600 transition-colors" onclick="closeResumeModal()">&times;</button>
+        <div class="w-full max-w-[912px] relative px-12 h-[78vh] flex items-center">
+            <button onclick="changeResumePage(-1)" aria-label="Previous resume page" class="absolute left-0 top-1/2 -translate-y-1/2 text-white text-lg z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all bg-black/30 hover:bg-black/45 backdrop-blur-md shadow-xl border border-white/40">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div id="resumePageContainer" class="w-full h-full flex items-center justify-center transition-opacity duration-200">
+                <img src="assets/resume/resume-page-01.jpg" alt="Resume page 1" class="resume-page-img max-w-full max-h-full object-contain shadow-2xl border border-gray-200 bg-white">
+                <img src="assets/resume/resume-page-02.jpg" alt="Resume page 2" class="resume-page-img hidden max-w-full max-h-full object-contain shadow-2xl border border-gray-200 bg-white">
+                <img src="assets/resume/resume-page-03.jpg" alt="Resume page 3" class="resume-page-img hidden max-w-full max-h-full object-contain shadow-2xl border border-gray-200 bg-white">
+                <img src="assets/resume/resume-page-04.jpg" alt="Resume page 4" class="resume-page-img hidden max-w-full max-h-full object-contain shadow-2xl border border-gray-200 bg-white">
+            </div>
+            <button onclick="changeResumePage(1)" aria-label="Next resume page" class="absolute right-0 top-1/2 -translate-y-1/2 text-white text-lg z-50 w-10 h-10 rounded-full flex items-center justify-center transition-all bg-black/30 hover:bg-black/45 backdrop-blur-md shadow-xl border border-white/40">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
     </div>
 
     <script>
+        // Progress Bar & Header Shrink
         window.onscroll = function() {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             var scrolled = (winScroll / height) * 100;
             document.getElementById("progress-bar").style.width = scrolled + "%";
+
+            // Header styling on scroll
+            const header = document.getElementById("header");
+            if (winScroll > 50) {
+                header.classList.add('py-3', 'shadow-sm');
+                header.classList.remove('py-5');
+            } else {
+                header.classList.add('py-5');
+                header.classList.remove('py-3', 'shadow-sm');
+            }
         };
 
+        // Scroll Reveal Animation (전체적으로 촘촘하게 동작하도록 최적화)
         document.addEventListener("DOMContentLoaded", () => {
-            const heroTitleContainer = document.getElementById('hero-title');
-            if(heroTitleContainer) {
-                const text1 = "Consumer", text2 = "Insight", text3 = "Engineer";
-                let html = '', delay = 0;
-                for(let char of text1) { html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`; delay += 0.05; }
-                html += '<br>';
-                for(let char of text2) { html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`; delay += 0.05; }
-                html += '<br><span class="text-white">';
-                for(let char of text3) { html += `<span class="char-anim inline-block" style="animation-delay: ${delay}s">${char === ' ' ? '&nbsp;' : char}</span>`; delay += 0.05; }
-                html += '</span>';
-                heroTitleContainer.innerHTML = html;
-            }
             const revealElements = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-            }, { threshold: 0.15 });
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active'); 
+                    }
+                });
+            }, { threshold: 0.1 });
             revealElements.forEach(el => revealObserver.observe(el));
         });
 
+        // Expandable Content (Video & Resume)
         function toggleDetail(id, defaultText, activeText) {
             const el = document.getElementById(id);
             const overlay = document.getElementById('overlay-' + id);
             const textElement = overlay ? overlay.querySelector('.toggle-text') : null;
             if (el.style.maxHeight && el.style.maxHeight !== '0px') {
                 el.style.maxHeight = '0px';
-                el.style.paddingTop = '0';
-                el.style.paddingBottom = '0';
                 if(textElement) textElement.innerHTML = defaultText;
             } else {
                 el.style.maxHeight = '3000px';
-                el.style.paddingTop = '1rem';
-                el.style.paddingBottom = '1rem';
                 if(textElement) textElement.innerHTML = activeText;
             }
         }
 
-        // 디자인 갤러리 로직
-        const designItems = [
-            { title: '포스터 디자인', layout: 'contain', images: [{ src: 'https://i.imgur.com/hg44dnK.jpg', label: '' }] },
-            { title: '상세페이지 제작', layout: 'scroll', images: [{ src: 'https://i.imgur.com/vQcOzkX.jpg', label: '' }] },
-            { title: '블로그 스킨 디자인', layout: 'scroll', images: [{ src: 'https://i.imgur.com/1C08ea5.jpg', label: '' }, { src: 'https://i.imgur.com/zOoavo1.jpg', label: '' }, { src: 'https://i.imgur.com/b5GWlvF.jpg', label: '' }] }
+        window.openCardNewsModal = function() {
+            const modal = document.getElementById('cardNewsModal');
+            const frame = document.getElementById('cardNewsModalFrame');
+            if (!modal || !frame) return;
+            frame.innerHTML = '<iframe class="w-full h-full" src="https://streamable.com/e/l7t2ze?autoplay=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                frame.classList.add('scale-100');
+            }, 10);
+        };
+
+        window.closeCardNewsModal = function() {
+            const modal = document.getElementById('cardNewsModal');
+            const frame = document.getElementById('cardNewsModalFrame');
+            if (!modal || !frame) return;
+            modal.classList.remove('opacity-100');
+            frame.classList.remove('scale-100');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = '';
+                frame.innerHTML = '';
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
+        // 디자인 슬라이드 모달
+        const designSlides = [
+            { src: 'https://i.imgur.com/hg44dnK.jpg', title: '포스터 디자인', mode: 'contain' },
+            { src: 'https://i.imgur.com/vQcOzkX.jpg', title: '상세페이지 제작', mode: 'scroll' },
+            { src: 'https://i.imgur.com/1C08ea5.jpg', title: '블로그 스킨 디자인 01', mode: 'wide' },
+            { src: 'https://i.imgur.com/zOoavo1.jpg', title: '블로그 스킨 디자인 02', mode: 'wide' },
+            { src: 'https://i.imgur.com/b5GWlvF.jpg', title: '블로그 스킨 디자인 03', mode: 'wide' }
         ];
-        let currentDesignIdx = 0;
+        let currentDesignSlide = 0;
 
         function openDesignModal() {
-            currentDesignIdx = 0;
+            currentDesignSlide = 0;
             updateDesignModal();
             const modal = document.getElementById('designModal');
             modal.classList.remove('hidden');
@@ -639,48 +927,45 @@
             setTimeout(() => { modal.classList.add('hidden'); modal.style.display = ''; }, 300);
             document.body.style.overflow = '';
         }
-        function changeDesign(step) {
+        function updateDesignModal() {
+            const slide = designSlides[currentDesignSlide];
+            document.getElementById('designModalTitle').innerText = slide.title;
             const container = document.getElementById('designModalImgContainer');
+            const counter = document.getElementById('designSlideCounter');
+            container.innerHTML = '';
+            container.scrollTop = 0;
+
+            const imgEl = document.createElement('img');
+            imgEl.src = slide.src;
+            imgEl.alt = slide.title;
+            if (slide.mode === 'scroll') {
+                container.className = 'w-full h-full bg-white border border-gray-200 overflow-y-auto custom-scrollbar block p-6 transition-opacity duration-300';
+                imgEl.className = 'block w-full max-w-3xl h-auto mx-auto drop-shadow-xl';
+            } else if (slide.mode === 'wide') {
+                container.className = 'w-full h-full bg-gray-100 border border-gray-200 flex items-center justify-center p-4 transition-opacity duration-300';
+                imgEl.className = 'block w-full max-w-5xl h-auto object-contain drop-shadow-xl';
+            } else {
+                container.className = 'w-full h-full bg-gray-100 border border-gray-200 flex items-center justify-center p-4 transition-opacity duration-300';
+                imgEl.className = 'block max-w-full max-h-full object-contain drop-shadow-xl';
+            }
+            imgEl.onerror = function() { if(this.src.endsWith('.jpg')) this.src = this.src.replace('.jpg', '.png'); };
+            container.appendChild(imgEl);
+            if (counter) counter.innerText = `${currentDesignSlide + 1} / ${designSlides.length}`;
+        }
+        function changeDesignSlide(direction) {
+            const container = document.getElementById('designModalImgContainer');
+            if (!container) return;
             container.style.opacity = '0';
             setTimeout(() => {
-                currentDesignIdx += step;
-                if (currentDesignIdx < 0) currentDesignIdx = designItems.length - 1;
-                if (currentDesignIdx >= designItems.length) currentDesignIdx = 0;
+                currentDesignSlide += direction;
+                if (currentDesignSlide < 0) currentDesignSlide = designSlides.length - 1;
+                if (currentDesignSlide >= designSlides.length) currentDesignSlide = 0;
                 updateDesignModal();
                 container.style.opacity = '1';
-            }, 300);
-        }
-        function updateDesignModal() {
-            const item = designItems[currentDesignIdx];
-            document.getElementById('designModalTitle').innerText = item.title;
-            const container = document.getElementById('designModalImgContainer');
-            container.innerHTML = ''; 
-            
-            if (item.layout === 'contain') {
-                container.className = "w-full h-full overflow-hidden rounded-xl border border-white/10 shadow-2xl bg-slate-900/50 flex items-center justify-center transition-opacity duration-300";
-            } else {
-                container.className = "w-full h-full overflow-y-auto custom-scrollbar rounded-xl border border-white/10 shadow-2xl bg-slate-900/50 block transition-opacity duration-300";
-            }
-            
-            item.images.forEach((imgData, index) => {
-                const wrapper = document.createElement('div');
-                if (item.layout === 'contain') { wrapper.className = "w-full h-full p-4 flex justify-center items-center"; } 
-                else {
-                    wrapper.className = "w-[95%] md:w-[98%] mx-auto py-12";
-                    if (item.images.length > 1 && index !== item.images.length - 1) wrapper.className += " border-b border-white/10 mb-12";
-                }
-                const imgEl = document.createElement('img');
-                imgEl.src = imgData.src;
-                if (item.layout === 'contain') { imgEl.className = "block max-w-full max-h-full object-contain shadow-lg"; } 
-                else { imgEl.className = "block w-full h-auto rounded-lg shadow-lg"; }
-                
-                imgEl.onerror = function() { if(this.src.endsWith('.jpg')) this.src = this.src.replace('.jpg', '.png'); };
-                wrapper.appendChild(imgEl);
-                container.appendChild(wrapper);
-            });
-            container.scrollTop = 0;
+            }, 180);
         }
 
+        // 이미지 및 슬라이드 모달
         function openModal(src) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
@@ -695,7 +980,49 @@
             modalImg.classList.remove('scale-100');
             setTimeout(() => { modal.classList.add('hidden'); modalImg.src = ""; }, 300);
         }
+        const appSlides = [
+            'https://i.imgur.com/0e4l4TL.png',
+            'https://i.imgur.com/L0nViCY.png',
+            'https://i.imgur.com/TZiP4zB.png',
+            'https://i.imgur.com/CwQpjFI.png',
+            'https://i.imgur.com/e57ZdvY.png',
+            'https://i.imgur.com/D6PIyZ8.png',
+            'https://i.imgur.com/4elNnAL.png',
+            'https://i.imgur.com/FFU8gF2.png'
+        ];
+        let currentAppSlide = 0;
+        const preloadedAppSlides = new Set();
+
+        function preloadAppSlide(index) {
+            const normalized = (index + appSlides.length) % appSlides.length;
+            if (preloadedAppSlides.has(normalized)) return;
+            const img = new Image();
+            img.src = appSlides[normalized];
+            preloadedAppSlides.add(normalized);
+        }
+
+        function renderAppSlide() {
+            const container = document.getElementById('appSliderContainer');
+            const counter = document.getElementById('appSlideCounter');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const img = document.createElement('img');
+            img.src = appSlides[currentAppSlide];
+            img.alt = `리마인드 앱 목업 ${currentAppSlide + 1}`;
+            img.className = 'w-full h-full object-contain mix-blend-multiply';
+            container.appendChild(img);
+
+            if (counter) counter.innerText = `${currentAppSlide + 1} / ${appSlides.length}`;
+            preloadAppSlide(currentAppSlide + 1);
+            preloadAppSlide(currentAppSlide - 1);
+        }
+
         function openSlideModal() {
+            currentAppSlide = 0;
+            renderAppSlide();
+            preloadAppSlide(0);
+            preloadAppSlide(1);
             const modal = document.getElementById('slideModal');
             modal.classList.remove('hidden');
             modal.style.display = 'flex'; 
@@ -708,9 +1035,57 @@
             setTimeout(() => { modal.classList.add('hidden'); modal.style.display = ''; }, 300);
             document.body.style.overflow = ''; 
         }
-        function scrollSlider(direction) {
-            const slider = document.getElementById('appSliderContainer');
-            if (slider) { slider.scrollBy({ left: direction * slider.clientWidth, behavior: 'smooth' }); }
+        function changeAppSlide(direction) {
+            const container = document.getElementById('appSliderContainer');
+            if (!container) return;
+            container.style.opacity = '0';
+            setTimeout(() => {
+                currentAppSlide += direction;
+                if (currentAppSlide < 0) currentAppSlide = appSlides.length - 1;
+                if (currentAppSlide >= appSlides.length) currentAppSlide = 0;
+                renderAppSlide();
+                container.style.opacity = '1';
+            }, 120);
+        }
+
+        let currentResumePage = 0;
+
+        function renderResumePage() {
+            const pages = document.querySelectorAll('.resume-page-img');
+            pages.forEach((page, index) => {
+                page.classList.toggle('hidden', index !== currentResumePage);
+            });
+        }
+
+        function openResumeModal() {
+            currentResumePage = 0;
+            renderResumePage();
+            const modal = document.getElementById('resumeModal');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('opacity-100'); }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeResumeModal() {
+            const modal = document.getElementById('resumeModal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => { modal.classList.add('hidden'); modal.style.display = ''; }, 300);
+            document.body.style.overflow = '';
+        }
+
+        function changeResumePage(direction) {
+            const container = document.getElementById('resumePageContainer');
+            if (!container) return;
+            container.style.opacity = '0';
+            setTimeout(() => {
+                const pages = document.querySelectorAll('.resume-page-img');
+                currentResumePage += direction;
+                if (currentResumePage < 0) currentResumePage = pages.length - 1;
+                if (currentResumePage >= pages.length) currentResumePage = 0;
+                renderResumePage();
+                container.style.opacity = '1';
+            }, 120);
         }
     </script>
 </body>
